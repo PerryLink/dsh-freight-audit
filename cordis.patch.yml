@@ -1,0 +1,3 @@
+- insert:
+    - id: dsh-freight-audit
+      name: '@perrylink/dsh-freight-audit'

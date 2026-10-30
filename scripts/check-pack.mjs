@@ -1,0 +1,1 @@
+import { readFileSync } from 'node:fs'; const f=JSON.parse(readFileSync('pack.json','utf8'))[0]?.files?.map(x=>x.path)??[]; for(const r of ['package.json','cordis.patch.yml','README.md','LICENSE','NOTICE','lib/plugin/index.js']) if(!f.includes(r)) throw new Error('missing '+r); console.log('pack ok '+f.length)

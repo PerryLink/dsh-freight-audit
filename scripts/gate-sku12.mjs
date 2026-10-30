@@ -1,0 +1,1 @@
+import{execFileSync}from'node:child_process';import{readFileSync}from'node:fs';try{execFileSync(process.execPath,['scripts/acceptance.mjs'],{stdio:'inherit'})}catch{process.exit(1)};const r=readFileSync('ACCEPTANCE.csv','utf8').trim().split('\n').slice(1);for(const x of r)if(!x.endsWith(',true'))process.exit(1);console.log(`gate ok ${r.length}`)
