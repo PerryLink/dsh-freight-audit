@@ -2,11 +2,18 @@
 
 # dsh-freight-audit
 
+> **Official repository.** The only official repository of this package, maintained by PerryLink. Same-name repositories under other accounts are not affiliated. Apache-2.0.
+
 [![npm](https://img.shields.io/npm/v/dsh-freight-audit)](https://www.npmjs.com/package/dsh-freight-audit)
 [![CI](https://github.com/PerryLink/dsh-freight-audit/actions/workflows/ci.yml/badge.svg)](https://github.com/PerryLink/dsh-freight-audit/actions)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 [![dsh-plugin](https://img.shields.io/badge/dsh--plugin-%E2%9C%93-green)](https://github.com/topics/dsh-plugin)
 [![docs](https://img.shields.io/badge/docs-domain%20index-0b5fff)](https://perrylink.github.io/dsh-plugins/)
+[![Gitee](https://img.shields.io/badge/Gitee-aggregate-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugins)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-freight-audit?metric=downloads)](https://dshfind.com/plugins/PerryLink/dsh-freight-audit?ref=badge)
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![Node](https://img.shields.io/badge/node-24.9%2B-brightgreen)](#)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-freight-audit)](https://www.npmjs.com/package/dsh-freight-audit)
 
 **Freight ratecard versioning, carrier bill audit, recovery summary and variance export.**
 
@@ -25,6 +32,8 @@ dsh plugin --profile <profile> add dsh-freight-audit
 ```
 
 </div>
+
+> ⭐ If this helps, a star makes it easier for the next person to find it. Nothing is gated behind it.
 
 ![Workflow diagram for dsh-freight-audit: local input, plugin, local output.](docs/assets/dsh-freight-audit-flow.svg)
 
@@ -88,6 +97,30 @@ Public/synthetic fixtures live in `test/fixtures/`; `ACCEPTANCE.csv` records the
 pnpm install --frozen-lockfile
 pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ```
+
+## Compatibility
+
+| Surface | Status |
+|---|---|
+| Harness | `dsh >=0.2.1-rc.3 <0.3.0` |
+| Node | `>=24.9.0 <25` |
+| Platforms | All; local files only |
+| Data | No network, no model call, no upload |
+
+## Permissions & data
+
+- Runs locally; no network, no model call, no upload.
+- Public/synthetic fixtures only; no customer data, no customer evidence.
+- Alpha/partial; not counted, no GA or production-readiness claim.
+- Frozen packages stay installable; no new features, only genuine breakage fixes.
+
+## Related work
+
+Sibling packages and family indexes: [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint)
+
+- [Domain index](https://perrylink.github.io/dsh-plugins/)
+- [Checker family](https://perrylink.github.io/zh/checkers/)
+- [Mainline family](https://github.com/PerryLink/dsh-kit)
 
 ## Family
 

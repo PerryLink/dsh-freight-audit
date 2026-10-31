@@ -2,11 +2,18 @@
 
 # dsh-freight-audit
 
+> **आधिकारिक रिपॉज़िटरी।** इस पैकेज की एकमात्र आधिकारिक रिपॉज़िटरी, PerryLink द्वारा अनुरक्षित। अन्य खातों की समान-नाम वाली रिपॉज़िटरी संबद्ध नहीं हैं। Apache-2.0।
+
 [![npm](https://img.shields.io/npm/v/dsh-freight-audit)](https://www.npmjs.com/package/dsh-freight-audit)
 [![CI](https://github.com/PerryLink/dsh-freight-audit/actions/workflows/ci.yml/badge.svg)](https://github.com/PerryLink/dsh-freight-audit/actions)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 [![dsh-plugin](https://img.shields.io/badge/dsh--plugin-%E2%9C%93-green)](https://github.com/topics/dsh-plugin)
 [![docs](https://img.shields.io/badge/docs-domain%20index-0b5fff)](https://perrylink.github.io/dsh-plugins/)
+[![Gitee](https://img.shields.io/badge/Gitee-aggregate-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugins)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-freight-audit?metric=downloads)](https://dshfind.com/plugins/PerryLink/dsh-freight-audit?ref=badge)
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![Node](https://img.shields.io/badge/node-24.9%2B-brightgreen)](#)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-freight-audit)](https://www.npmjs.com/package/dsh-freight-audit)
 
 **फ़्रेट रेटकार्ड वर्ज़निंग, कैरियर बिल ऑडिट, रिकवरी सारांश और वेरिएंस निर्यात।**
 
@@ -25,6 +32,8 @@ dsh plugin --profile <profile> add dsh-freight-audit
 ```
 
 </div>
+
+> ⭐ अगर यह मदद करे, तो एक स्टार अगले व्यक्ति को इसे खोजने में आसानी देता है। स्टार से कोई सुविधा अनलॉक नहीं होती।
 
 ![Workflow diagram for dsh-freight-audit: local input, plugin, local output.](docs/assets/dsh-freight-audit-flow.svg)
 
@@ -88,6 +97,30 @@ dsh --profile <profile> --dump-config | grep dsh-freight-audit
 pnpm install --frozen-lockfile
 pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ```
+
+## संगतता
+
+| सतह | स्थिति |
+|---|---|
+| Harness | `dsh >=0.2.1-rc.3 <0.3.0` |
+| Node | `>=24.9.0 <25` |
+| Platforms | All; local files only |
+| डेटा | No network, no model call, no upload |
+
+## अनुमतियाँ और डेटा
+
+- स्थानीय रूप से चलता है; नेटवर्क, मॉडल कॉल या अपलोड नहीं।
+- केवल सार्वजनिक/सिंथेटिक fixtures; ग्राहक डेटा या साक्ष्य नहीं।
+- alpha/आंशिक; गिना नहीं गया, GA या उत्पादन-तैयारी का दावा नहीं।
+- फ़्रीज़ पैकेज इंस्टॉल योग्य रहते हैं; नई सुविधाएँ नहीं, केवल वास्तविक खराबी।
+
+## संबंधित कार्य
+
+सहोदर पैकेज और परिवार सूचकांक: [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint)
+
+- [डोमेन सूचकांक](https://perrylink.github.io/dsh-plugins/)
+- [चेकर परिवार](https://perrylink.github.io/zh/checkers/)
+- [मुख्य परिवार](https://github.com/PerryLink/dsh-kit)
 
 ## परिवार
 
