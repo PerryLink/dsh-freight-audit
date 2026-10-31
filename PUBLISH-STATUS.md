@@ -6,3 +6,6 @@
 ## 0.1.0-alpha.1 — dispute CSV (2026-10-31)
 
 - Added `freight.dispute`; read-only audit + local CSV; tests 3/3; no carrier submission.
+
+### latest moved
+- `latest`/`next` verified alpha.1 after propagation.
