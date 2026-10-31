@@ -16,3 +16,7 @@
 
 ### latest moved
 - `latest`/`next` verified alpha.2 after propagation.
+
+## 0.1.0-alpha.3 — recovery summary (2026-10-31)
+
+- Added `freight.recovery_summary`; 6 gate rows.

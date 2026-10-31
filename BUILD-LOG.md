@@ -11,3 +11,7 @@
 ### alpha.2 — zone lookup
 
 - Added `freight.zone_lookup`; MIT UPS sample; gate 5 rows.
+
+### alpha.3 — recovery summary
+
+- Added over/under/net recovery; tests 4/4; gate 6 rows.

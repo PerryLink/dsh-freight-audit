@@ -1,6 +1,6 @@
 {
   "name": "@perrylink/dsh-freight-audit",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "Freight ratecard versioning, carrier bill audit and variance xlsx (SKU-12 S1 public/synthetic demo).",
   "type": "module",
   "main": "./lib/plugin/index.js",
