@@ -1,7 +1,7 @@
 req_id,metric,threshold,actual,script,evidence_sha256,pass,source,counted
-SKU-12-A01,账单解析（30）,30/30,30,scripts/acceptance.mjs,8a5aea871457e65eac70a03bcdc7b7193b7cc21086fe0fb2168213cb15662045,true,public/synthetic,false
-SKU-12-A02,异常票,5,5,scripts/acceptance.mjs,8a5aea871457e65eac70a03bcdc7b7193b7cc21086fe0fb2168213cb15662045,true,public/synthetic,false
-SKU-12-A03,差额合计分,500,500,scripts/acceptance.mjs,8a5aea871457e65eac70a03bcdc7b7193b7cc21086fe0fb2168213cb15662045,true,public/synthetic,false
-SKU-12-A04,底稿 sheet,1,1,scripts/acceptance.mjs,8a5aea871457e65eac70a03bcdc7b7193b7cc21086fe0fb2168213cb15662045,true,public/synthetic,false
-SKU-12-A05,公开 zone rate,2327,2327,scripts/acceptance.mjs,8a5aea871457e65eac70a03bcdc7b7193b7cc21086fe0fb2168213cb15662045,true,public/synthetic,false
-SKU-12-A06,追回汇总净额,100,100,scripts/acceptance.mjs,8a5aea871457e65eac70a03bcdc7b7193b7cc21086fe0fb2168213cb15662045,true,public/synthetic,false
+SKU-12-A01,账单解析（30）,30/30,30,scripts/acceptance.mjs,34dad438f8f95f24de1dce8ffbe05278ca1e971423679905c40d39768fb0ea4c,true,public/synthetic,false
+SKU-12-A02,异常票,5,5,scripts/acceptance.mjs,34dad438f8f95f24de1dce8ffbe05278ca1e971423679905c40d39768fb0ea4c,true,public/synthetic,false
+SKU-12-A03,差额合计分,500,500,scripts/acceptance.mjs,34dad438f8f95f24de1dce8ffbe05278ca1e971423679905c40d39768fb0ea4c,true,public/synthetic,false
+SKU-12-A04,底稿 sheet,1,1,scripts/acceptance.mjs,34dad438f8f95f24de1dce8ffbe05278ca1e971423679905c40d39768fb0ea4c,true,public/synthetic,false
+SKU-12-A05,公开 zone rate,2327,2327,scripts/acceptance.mjs,34dad438f8f95f24de1dce8ffbe05278ca1e971423679905c40d39768fb0ea4c,true,public/synthetic,false
+SKU-12-A06,追回汇总净额,100,100,scripts/acceptance.mjs,34dad438f8f95f24de1dce8ffbe05278ca1e971423679905c40d39768fb0ea4c,true,public/synthetic,false

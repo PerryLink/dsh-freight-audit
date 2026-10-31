@@ -1,7 +1,7 @@
 {
   "name": "@perrylink/dsh-freight-audit",
-  "version": "0.1.0-alpha.3",
-  "description": "Freight ratecard versioning, carrier bill audit and variance xlsx (SKU-12 S1 public/synthetic demo).",
+  "version": "0.1.0-alpha.4",
+  "description": "Freight ratecard versioning, carrier bill audit, recovery summary and variance export.",
   "type": "module",
   "main": "./lib/plugin/index.js",
   "types": "./lib/plugin/index.d.ts",
@@ -45,7 +45,8 @@
     "freight",
     "audit",
     "logistics",
-    "perrylink"
+    "perrylink",
+    "ratecard"
   ],
   "repository": {
     "type": "git",
@@ -80,5 +81,9 @@
     "@deepseek-ai/schemastery": "3.18.5",
     "@types/node": "^24.0.0",
     "typescript": "7.0.2"
+  },
+  "homepage": "https://github.com/PerryLink/dsh-freight-audit#readme",
+  "bugs": {
+    "url": "https://github.com/PerryLink/dsh-freight-audit/issues"
   }
 }
