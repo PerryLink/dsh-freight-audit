@@ -1,5 +1,6 @@
 req_id,metric,threshold,actual,script,evidence_sha256,pass
-SKU-12-A01,账单解析（30）,30/30,30,scripts/acceptance.mjs,3cbd711759ed834c3926f4b1ae8bbb18ba4c3bd71e39f0166aea88233f6af9c3,true
-SKU-12-A02,异常票,5,5,scripts/acceptance.mjs,3cbd711759ed834c3926f4b1ae8bbb18ba4c3bd71e39f0166aea88233f6af9c3,true
-SKU-12-A03,差额合计分,500,500,scripts/acceptance.mjs,3cbd711759ed834c3926f4b1ae8bbb18ba4c3bd71e39f0166aea88233f6af9c3,true
-SKU-12-A04,底稿 sheet,1,1,scripts/acceptance.mjs,3cbd711759ed834c3926f4b1ae8bbb18ba4c3bd71e39f0166aea88233f6af9c3,true
+SKU-12-A01,账单解析（30）,30/30,30,scripts/acceptance.mjs,22744de6115567187f37af543cc8e569a953bb795c0ea4704225257a4c2ac73f,true
+SKU-12-A02,异常票,5,5,scripts/acceptance.mjs,22744de6115567187f37af543cc8e569a953bb795c0ea4704225257a4c2ac73f,true
+SKU-12-A03,差额合计分,500,500,scripts/acceptance.mjs,22744de6115567187f37af543cc8e569a953bb795c0ea4704225257a4c2ac73f,true
+SKU-12-A04,底稿 sheet,1,1,scripts/acceptance.mjs,22744de6115567187f37af543cc8e569a953bb795c0ea4704225257a4c2ac73f,true
+SKU-12-A05,公开 zone rate,2327,2327,scripts/acceptance.mjs,22744de6115567187f37af543cc8e569a953bb795c0ea4704225257a4c2ac73f,true

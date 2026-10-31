@@ -9,3 +9,7 @@
 
 ### latest moved
 - `latest`/`next` verified alpha.1 after propagation.
+
+## 0.1.0-alpha.2 — zone lookup (2026-10-31)
+
+- Added `freight.zone_lookup`; MIT UPS 40 lb zone sample; 5 gate rows.
