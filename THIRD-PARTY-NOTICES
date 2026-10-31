@@ -1,8 +1,7 @@
-Third-party notices for @perrylink/dsh-ghg
+Third-party notices for dsh-freight-audit
 
 - fflate (MIT)
-- zod (MIT)
 - xlsx (Apache-2.0)
+- zod (MIT)
 
-No customer bill, firm report or factor library is included. The electricity
-factor is a public reference, not assurance-grade.
+No customer data is included. Public samples are synthetic or MIT/Apache-licensed.

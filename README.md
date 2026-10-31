@@ -1,4 +1,4 @@
-# @perrylink/dsh-freight-audit
+# dsh-freight-audit
 
 Freight ratecard versioning, carrier bill audit, recovery summary and variance export for DeepSeek Harness.
 
@@ -7,7 +7,7 @@ Freight ratecard versioning, carrier bill audit, recovery summary and variance e
 ## Install
 
 ```sh
-dsh plugin --profile <profile> add @perrylink/dsh-freight-audit
+dsh plugin --profile <profile> add dsh-freight-audit
 dsh --profile <profile> --dump-config | grep dsh-freight-audit
 ```
 
@@ -16,7 +16,7 @@ Requires DSH `>=0.2.1-rc.3 <0.3.0` and Node `>=24.9 <25`.
 <details>
 <summary>中文摘要</summary>
 
-运费 ratecard 版本、账单审计、recovery 汇总与差异导出。 安装：`dsh plugin --profile <profile> add @perrylink/dsh-freight-audit`。公开/合成、alpha、非 GA。
+运费 ratecard 版本、账单审计、recovery 汇总与差异导出。 安装：`dsh plugin --profile <profile> add dsh-freight-audit`。公开/合成、alpha、非 GA。
 
 </details>
 
