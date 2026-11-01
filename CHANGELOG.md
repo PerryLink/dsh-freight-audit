@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.0-alpha.10] — 2026-11-01
+
+### Added
+
+- `freight.ratecard_validate`: rate-card hygiene — non-negative money fields, fuel share 0-100, valid effective window and overlapping versions per carrier. Read-only. Verified by `node --test test/*.test.mjs` (9/9).
+
 ## [0.1.0-alpha.9] — 2026-11-01
 
 ### Changed

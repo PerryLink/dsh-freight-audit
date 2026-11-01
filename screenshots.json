@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-freight-audit-capability.png",
+    "kind": "capability",
+    "alt": "dsh-freight-audit real test run",
+    "caption": "Real command: node --test test/ratecard-validate.test.mjs — 4 tests passed, 0 failed (rate-card money/fuel/window checks and version overlap). Run 2026-11-01; the image is rendered from the captured terminal output."
+  },
+  {
+    "path": "docs/assets/dsh-freight-audit-flow.svg",
+    "kind": "flow",
+    "alt": "dsh-freight-audit flow diagram",
+    "caption": "Pipeline diagram, schematic not test evidence."
+  }
+]
