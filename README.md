@@ -94,7 +94,7 @@ dsh --profile <profile> --dump-config | grep dsh-freight-audit
 
 ### Fixture-backed example
 
-Input: [`fixtures/public/mit/ground_40lb_list.csv`](fixtures/public/mit/ground_40lb_list.csv)
+Input: [`fixtures/public/mit/ground_40lb_list.csv`](https://github.com/PerryLink/dsh-freight-audit/blob/main/fixtures/public/mit/ground_40lb_list.csv)
 
 Command: `pnpm test`
 
@@ -143,6 +143,17 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ## Related work
 
 Sibling packages and family indexes: [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint)
+
+
+### Related checkers
+
+Each entry is a separate package with its own rule pack and version; install only the ones you need.
+
+| Package | Why it is relevant |
+|---|---|
+| [`dsh-demurrage-ledger`](https://github.com/PerryLink/dsh-demurrage-ledger) | Demurrage/detention ledger completeness and arithmetic. |
+| [`dsh-lc-doc-check`](https://github.com/PerryLink/dsh-lc-doc-check) | Letter-of-credit presentation checklist and dates. |
+| [`dsh-customs-doc-check`](https://github.com/PerryLink/dsh-customs-doc-check) | Customs declaration document consistency. |
 
 - [Domain index](https://perrylink.github.io/dsh-plugins/)
 - [Checker family](https://perrylink.github.io/zh/checkers/)

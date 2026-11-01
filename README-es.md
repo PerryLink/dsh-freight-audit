@@ -94,7 +94,7 @@ dsh --profile <profile> --dump-config | grep dsh-freight-audit
 
 ### Ejemplo respaldado por fixture
 
-Entrada: [`fixtures/public/mit/ground_40lb_list.csv`](fixtures/public/mit/ground_40lb_list.csv)
+Entrada: [`fixtures/public/mit/ground_40lb_list.csv`](https://github.com/PerryLink/dsh-freight-audit/blob/main/fixtures/public/mit/ground_40lb_list.csv)
 
 Comando: `pnpm test`
 
@@ -143,6 +143,8 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ## Trabajo relacionado
 
 Paquetes hermanos e índices de familia: [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint)
+
+Verificadores relacionados (tabla en inglés): [Related checkers](README.md#related-checkers).
 
 - [Índice de dominio](https://perrylink.github.io/dsh-plugins/)
 - [Familia de checkers](https://perrylink.github.io/zh/checkers/)

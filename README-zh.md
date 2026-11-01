@@ -94,7 +94,7 @@ dsh --profile <profile> --dump-config | grep dsh-freight-audit
 
 ### fixture 支撑的示例
 
-输入: [`fixtures/public/mit/ground_40lb_list.csv`](fixtures/public/mit/ground_40lb_list.csv)
+输入: [`fixtures/public/mit/ground_40lb_list.csv`](https://github.com/PerryLink/dsh-freight-audit/blob/main/fixtures/public/mit/ground_40lb_list.csv)
 
 命令: `pnpm test`
 
@@ -143,6 +143,8 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ## 相关项目
 
 兄弟包与家族索引： [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint)
+
+相关核查器（英文表）: [Related checkers](README.md#related-checkers).
 
 - [领域索引](https://perrylink.github.io/dsh-plugins/)
 - [Checker 家族](https://perrylink.github.io/zh/checkers/)
