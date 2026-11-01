@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.1.0-alpha.10] — 2026-11-01
+## [0.1.0-alpha.11] — 2026-11-01
+
+### Added
+
+- `freight.accessorial_check`: accessorial charge validation — known charge types, non-negative integer amounts, duplicates, agreed-list membership and an optional total cap. Verified by `node --test test/*.test.mjs` (13/13).
+
+## [Unreleased]
 
 ### Added
 

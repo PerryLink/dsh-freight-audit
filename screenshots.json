@@ -10,5 +10,11 @@
     "kind": "flow",
     "alt": "dsh-freight-audit flow diagram",
     "caption": "Pipeline diagram, schematic not test evidence."
+  },
+  {
+    "path": "docs/assets/dsh-freight-audit-capability2.png",
+    "kind": "capability",
+    "alt": "dsh-freight-audit second capability run",
+    "caption": "Real command: node --test test/accessorial.test.mjs — 4 tests passed, 0 failed (Accessorial charge validation: known types, duplicates, agreed list and total cap.) Run 2026-11-01; rendered from the captured terminal output."
   }
 ]

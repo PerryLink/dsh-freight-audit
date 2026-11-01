@@ -30,3 +30,36 @@ export function validateRateCards(cards: Rate[]): RateCardIssue[] {
   }
   return issues
 }
+
+/** Accessorial charge types the audit understands (public carrier charge descriptions). */
+export const ACCESSORIAL_TYPES = ['fuel','detention','liftgate','residential','inside_delivery','appointment','oversize','hazmat','waiting_time','reweigh','redelivery','storage'] as const
+export interface AccessorialItem { type: string; amount_cents: number }
+export interface AccessorialInput { items: AccessorialItem[]; allowed?: string[]; cap_cents?: number }
+export interface AccessorialIssue { code: string; detail: string }
+export interface AccessorialReport { total_cents: number; items: number; issues: AccessorialIssue[] }
+export function checkAccessorials(input: AccessorialInput): AccessorialReport {
+  const issues: AccessorialIssue[] = []
+  const seen = new Set<string>()
+  let total = 0
+  for (const item of input.items) {
+    const type = (item.type ?? '').trim().toLowerCase()
+    if (!(ACCESSORIAL_TYPES as readonly string[]).includes(type)) {
+      issues.push({ code: 'E_FREIGHT_ACCESSORIAL_UNKNOWN', detail: `${type || '(empty)'} is not a known accessorial type` })
+      continue
+    }
+    if (!Number.isInteger(item.amount_cents) || item.amount_cents < 0) {
+      issues.push({ code: 'E_FREIGHT_ACCESSORIAL_VALUE', detail: `${type} has a non-integer or negative amount` })
+      continue
+    }
+    if (seen.has(type)) issues.push({ code: 'E_FREIGHT_ACCESSORIAL_DUPLICATE', detail: `${type} appears more than once` })
+    else seen.add(type)
+    if (input.allowed && !input.allowed.map((a) => a.toLowerCase()).includes(type)) {
+      issues.push({ code: 'E_FREIGHT_ACCESSORIAL_NOT_ALLOWED', detail: `${type} is not in the agreed accessorial list` })
+    }
+    total += item.amount_cents
+  }
+  if (input.cap_cents !== undefined && total > input.cap_cents) {
+    issues.push({ code: 'E_FREIGHT_ACCESSORIAL_CAP', detail: `total ${total} exceeds the cap ${input.cap_cents}` })
+  }
+  return { total_cents: total, items: input.items.length, issues }
+}
