@@ -1,15 +1,24 @@
 # Changelog
 
-## 0.1.0-alpha.3 — 2026-10-31
+All notable changes to `dsh-freight-audit` are documented here. The format follows Keep a Changelog; this project uses alpha versions.
 
-- Added `freight.recovery_summary`; 6 gate rows.
+## [0.1.0-alpha.7] — 2026-11-01
 
-## 0.1.0-alpha.2 — 2026-10-31
+### Added
 
-- Added `freight.zone_lookup` with MIT UPS 40 lb zone sample; 5 gate rows.
+- Five-language READMEs: English, 简体中文, Español, Português, हिन्दी.
+- Local workflow SVG at `docs/assets/dsh-freight-audit-flow.svg`.
+- Family cross-links (domain index, checker family, `dsh-kit`), compatibility, permissions, and related-work sections.
+- Standard repository files: `SECURITY.md`, `PRIVACY.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, and `icon.svg`.
 
-## 0.1.0-alpha.1 — 2026-10-31
+### Changed
 
-- Added `freight.dispute` CSV for billed-vs-expected variances; no carrier submission.
-## 0.1.0-alpha.0 — 2026-10-31
-- First S1: ratecard/overlap, bill audit variance, xlsx.
+- README aligned with the PerryLink DSH checker/plugin family style; package remains public/synthetic, alpha, not GA.
+
+### Maintenance
+
+- Frozen on 2026-10-31: no new features; only genuine breakage fixes.
+
+## [Earlier]
+
+Earlier alpha builds are available from npm and GitHub Releases; this file starts at the family-standard documentation wave.
