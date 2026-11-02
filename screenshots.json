@@ -1,5 +1,18 @@
 [
   {
+    "path": "docs/assets/quickstart.png",
+    "kind": "quickstart",
+    "alt": "dsh-freight-audit quickstart terminal output",
+    "caption": "Real command: node samples/quickstart/run.mjs --check — synthetic carrier bill, 12 shipments in / 10 with a variance, net -727 cents (overcharge 100, undercharge 827), dispute CSV over 10 shipments, 3 rate-card issues and 4 accessorial issues. Rendered from the captured terminal output.",
+    "command": "node samples/quickstart/run.mjs --check",
+    "run_at": "2026-11-02T14:15:29Z",
+    "output_sha256": "0c4899abfe21e8df340777dbee41f6d816f2f6a0a1da0848e77fae90b3bfc3d5",
+    "output_path": "samples/quickstart/expected/result.json",
+    "log": "docs/assets/quickstart.log",
+    "log_sha256": "f728ab99632318a5edf708f65d7180ace65bb2ef85af3be99bbb509dbbf55565",
+    "image_sha256": "7da5f848ca90d0a33cde940148f026afa486767f45b6b28f92afee1acbe1d5d7"
+  },
+  {
     "path": "docs/assets/dsh-freight-audit-capability.png",
     "kind": "capability",
     "alt": "dsh-freight-audit real test run",

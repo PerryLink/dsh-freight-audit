@@ -1,6 +1,6 @@
 {
   "name": "dsh-freight-audit",
-  "version": "0.1.0-alpha.13",
+  "version": "0.1.0-alpha.14",
   "description": "Freight ratecard versioning, carrier bill audit, recovery summary and variance export.",
   "type": "module",
   "main": "./lib/plugin/index.js",
@@ -28,11 +28,28 @@
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "CHANGELOG.md",
-    "icon.svg"
+    "icon.svg",
+    "samples",
+    "TROUBLESHOOTING.md",
+    "screenshots.json"
   ],
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "demo": {
+      "sample": "samples/quickstart/input/bills.csv",
+      "prompt": "我有一车承运商账单，帮我按费率卡逐票核对，把多收少收的差额和要追回的金额算出来。",
+      "expect": "samples/quickstart/expected/result.json",
+      "screenshot": "docs/assets/quickstart.png",
+      "reads": [
+        "用户指定的运费账单 CSV 与费率卡（样例：samples/quickstart/input/）"
+      ],
+      "writes": [
+        "$DSH_HOME/storages/dsh-freight-audit/exports/"
+      ],
+      "network": false,
+      "external": []
     }
   },
   "engines": {

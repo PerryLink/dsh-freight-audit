@@ -1,0 +1,29 @@
+[
+  {
+    "carrier": "SYN-LTL",
+    "version": "v2026",
+    "base_cents": 1500,
+    "per_kg_cents": 120,
+    "fuel_pct": 8.5,
+    "effective_from": "2026-01-01",
+    "effective_to": "2026-12-31"
+  },
+  {
+    "carrier": "SYN-LTL",
+    "version": "v2027",
+    "base_cents": 1600,
+    "per_kg_cents": 130,
+    "fuel_pct": 9,
+    "effective_from": "2026-06-01",
+    "effective_to": "2027-05-31"
+  },
+  {
+    "carrier": "SYN-LTL",
+    "version": "v2028",
+    "base_cents": 1500,
+    "per_kg_cents": 120,
+    "fuel_pct": 120,
+    "effective_from": "2027-01-01",
+    "effective_to": "2027-12-31"
+  }
+]

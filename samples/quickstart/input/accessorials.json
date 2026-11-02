@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "type": "fuel", "amount_cents": 1200 },
+    { "type": "detention", "amount_cents": 3500 },
+    { "type": "detention", "amount_cents": 3500 },
+    { "type": "teleport", "amount_cents": 100 },
+    { "type": "liftgate", "amount_cents": 800 },
+    { "type": "waiting_time", "amount_cents": 500 }
+  ],
+  "allowed": ["fuel", "detention", "liftgate"],
+  "cap_cents": 8000
+}

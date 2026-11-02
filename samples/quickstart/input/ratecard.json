@@ -1,0 +1,9 @@
+{
+  "carrier": "SYN-LTL",
+  "version": "v2026",
+  "base_cents": 1500,
+  "per_kg_cents": 120,
+  "fuel_pct": 8.5,
+  "effective_from": "2026-01-01",
+  "effective_to": "2026-12-31"
+}

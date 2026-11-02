@@ -31,6 +31,74 @@ dsh plugin --profile <profile> add dsh-freight-audit
 
 </div>
 
+## 一句话
+
+把承运商账单逐票对上费率卡，算出多收少收，并导出争议单和底稿。
+
+## 适合 / 不适合
+
+- **适合**：几十到几千票的月结运费账单（CSV）；对账期初先查差额、再决定向承运商追多少。
+- **不适合**：没有重量或金额的手工记录；直连 TMS / 承运商门户（本包不连外部系统）；替代正式索赔或法律程序。
+
+## 输入
+
+- 格式：UTF-8 CSV，表头含 `shipment_id,weight_kg,billed`；`billed` 写金额（如 `23.00`），`weight_kg` 写数字。费率卡用 JSON 给 `carrier/version/base_cents/per_kg_cents/fuel_pct/effective_from`。
+- 大小：单批 ≤ 5 MB（约 2 万票）；自带样例 12 票，约 0.3 KB。
+- 来源：从 TMS / 承运商月结单导出后另存为 CSV；原文件不会被修改。
+
+## 输出
+
+- 终端摘要：账单票数、异常票、差额合计、多收 / 少收 / 净额、zone 公布价、费率卡与附加费问题。
+- 文件：底稿 `xlsx`（逐票 billed/expected/variance）与争议单 `CSV`，落在 `$DSH_HOME/storages/dsh-freight-audit/exports/`；不改原账单。
+- 样例金标：`samples/quickstart/expected/result.json`（由真实运行产生）。
+
+## 示例
+
+直接复制下面这句：
+
+> 我有一车承运商账单，帮我按费率卡逐票核对，把多收少收的差额和要追回的金额算出来。
+
+用自带样例复跑并核对金标：
+
+```sh
+node samples/quickstart/run.mjs --check
+```
+
+![dsh-freight-audit quickstart 真实运行输出](docs/assets/quickstart.png)
+
+截图就是上面这条命令的真实输出；金标比对结果见 `samples/quickstart/expected/result.json`。
+
+## 权限
+
+读：用户指定的运费账单 CSV、费率卡 JSON、zone 价目表；不读其他目录
+写：$DSH_HOME/storages/dsh-freight-audit/exports/（底稿 xlsx、争议单 CSV）；不改原账单
+联网：否
+外部系统：无
+
+写文件的工具 `freight.ratecard`（set）、`freight.audit`、`freight.export`、`freight.dispute` 标 **R1**（本地写）；`freight.zone_lookup`、`freight.recovery_summary`、`freight.ratecard_validate`、`freight.accessorial_check` 标 **R0**（只读）。
+
+## FAQ
+
+### 1. 装不上怎么办？
+
+确认 Node `>=24.9 <25`、DSH `>=0.2.1-rc.3 <0.4.0`，再执行 `dsh plugin --profile <profile> add dsh-freight-audit`。仍失败先看 `TROUBLESHOOTING.md` 第 1 条。
+
+### 2. 结果不对怎么办？
+
+先跑 `node samples/quickstart/run.mjs --check`；再检查账单表头是否为 `shipment_id,weight_kg,billed`、金额是否两位小数。差额 = 账单金额 − 费率卡应计金额，单位是分。
+
+### 3. 能处理我的文件吗？
+
+能。单批 ≤5 MB 的 UTF-8 CSV 在本地读、本地算，不上传、不联网。真实承运商账单不要贴进 issue。
+
+### 4. 会改我的账单吗？
+
+不会。只写 DSH 自己的 `$DSH_HOME/storages/dsh-freight-audit/exports/`，原账单不动。
+
+## 版本
+
+`0.1.0-alpha.14` · 28 项测试通过（`node --test test/*.test.mjs`）。
+
 > ⭐ 如果它帮到了你，点个 star 会让下一个人更容易找到它；没有任何功能被 star 解锁。
 
 ![Workflow diagram for dsh-freight-audit: local input, plugin, local output.](docs/assets/dsh-freight-audit-flow.svg)
