@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.1.0-alpha.12] — 2026-11-01
+## [0.1.0-alpha.13] — 2026-11-01
 
 ### Security / Fixes
 
