@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.1.0-alpha.11] — 2026-11-01
+## [0.1.0-alpha.12] — 2026-11-01
+
+### Security / Fixes
+
+- Path-traversal guard, CSV quoting and spreadsheet-formula neutralisation in the dispute export.
+
 
 ### Added
 

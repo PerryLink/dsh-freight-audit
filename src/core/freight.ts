@@ -1,9 +1,30 @@
-export type FreightErrorCode='E_FREIGHT_CSV_INVALID'|'E_FREIGHT_RATE_MISSING'|'E_FREIGHT_RATE_OVERLAP'|'E_FREIGHT_EXPORT_FAILED'
+export type FreightErrorCode='E_FREIGHT_CSV_INVALID'|'E_FREIGHT_RATE_MISSING'|'E_FREIGHT_RATE_OVERLAP'|'E_FREIGHT_EXPORT_FAILED'|'E_FREIGHT_PATH_INVALID'|'E_FREIGHT_PATH_NOT_ALLOWED'
 export class FreightError extends Error{readonly code:FreightErrorCode;constructor(code:FreightErrorCode,message:string){super(`${code}: ${message}`);this.name='FreightError';this.code=code}}
 export interface Rate{carrier:string;version:string;base_cents:number;per_kg_cents:number;fuel_pct:number;effective_from:string;effective_to?:string}
 export interface Bill{shipment_id:string;carrier:string;version:string;weight_kg:number;billed_cents:number;expected_cents:number;variance_cents:number;created_at:string}
 export function cents(raw:string):number{const v=raw.trim().replace(/[¥￥,\s]/g,'');const m=/^(-?)(\d+)(?:\.(\d{1,2}))?$/.exec(v);if(!m)throw new FreightError('E_FREIGHT_CSV_INVALID',`bad amount ${raw}`);return (m[1]==='-'?-1:1)*(Number(m[2])*100+Number((m[3]??'').padEnd(2,'0')))}
 export function parseBills(text:string,carrier:string,version:string):Bill[]{const l=text.trim().split(/\r?\n/).filter(Boolean);if(l.length<2)throw new FreightError('E_FREIGHT_CSV_INVALID','CSV needs header+rows');const h=l[0]!.split(',').map(x=>x.toLowerCase().trim());const si=h.indexOf('shipment_id'),wi=h.indexOf('weight_kg'),bi=h.indexOf('billed');if(si<0||wi<0||bi<0)throw new FreightError('E_FREIGHT_CSV_INVALID','CSV needs shipment_id,weight_kg,billed');return l.slice(1).map(row=>{const c=row.split(',').map(x=>x.trim());const weight=Number(c[wi]);const billed=cents(c[bi]??'');if(!Number.isFinite(weight)||weight<=0)throw new FreightError('E_FREIGHT_CSV_INVALID','bad weight');return{shipment_id:c[si]??'',carrier,version,weight_kg:weight,billed_cents:billed,expected_cents:0,variance_cents:0,created_at:new Date().toISOString()}})}
+const CSV_NEEDS_QUOTES = /[",\r\n]/
+const CSV_FORMULA_PREFIX = /^[=+\-@]/
+/** Escape one CSV text field: neutralise formula prefixes, then quote and double embedded quotes. */
+export function csvTextField(value: string): string {
+  const guarded = CSV_FORMULA_PREFIX.test(value) ? `'${value}` : value
+  return CSV_NEEDS_QUOTES.test(guarded) ? `"${guarded.replace(/"/g, '""')}"` : guarded
+}
+/** Numbers stay numeric: a negative variance must not be mistaken for a formula. */
+export function csvNumberField(value: number): string { return String(value) }
+export const DISPUTE_CSV_HEADER = 'shipment_id,weight_kg,billed_cents,expected_cents,variance_cents'
+/** Build the dispute CSV with every text field escaped before it reaches the file. */
+export function buildDisputeCsv(rows: readonly Bill[]): string {
+  const lines = rows.map((bill) => [
+    csvTextField(bill.shipment_id),
+    csvNumberField(bill.weight_kg),
+    csvNumberField(bill.billed_cents),
+    csvNumberField(bill.expected_cents),
+    csvNumberField(bill.variance_cents),
+  ].join(','))
+  return [DISPUTE_CSV_HEADER, ...lines].join('\n') + '\n'
+}
 export function expectedCents(rate:Rate,weight:number):number{return Math.round(rate.base_cents+rate.per_kg_cents*weight+ (rate.base_cents+rate.per_kg_cents*weight)*rate.fuel_pct/100)}
 export function overlaps(a:Rate,b:Rate):boolean{if(a.carrier!==b.carrier||a.version===b.version)return false;const aEnd=a.effective_to??'9999-12-31',bEnd=b.effective_to??'9999-12-31';return a.effective_from<=bEnd&&b.effective_from<=aEnd}
 
