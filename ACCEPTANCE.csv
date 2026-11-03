@@ -1,10 +1,10 @@
 req_id,metric,threshold,actual,script,evidence_sha256,pass,source,counted
-SKU-12-A01,账单解析（30）,30/30,30,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
-SKU-12-A02,异常票,5,5,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
-SKU-12-A03,差额合计分,500,500,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
-SKU-12-A04,底稿 sheet,1,1,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
-SKU-12-A05,公开 zone rate,2327,2327,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
-SKU-12-A06,追回汇总净额,100,100,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
-SKU-12-A07,费率卡重叠检测,1,1,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
-SKU-12-A08,附加费校验,1,1,scripts/acceptance.mjs,39cfdd415bcfd4e5d2a0d13f1d4237a86d17d9506f38029aa21026e4e357af3c,true,public/synthetic,false
+SKU-12-A01,账单解析（30）,30/30,30,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
+SKU-12-A02,异常票,5,5,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
+SKU-12-A03,差额合计分,500,500,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
+SKU-12-A04,底稿 sheet,1,1,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
+SKU-12-A05,公开 zone rate,2327,2327,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
+SKU-12-A06,追回汇总净额,100,100,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
+SKU-12-A07,费率卡重叠检测,1,1,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
+SKU-12-A08,附加费校验,1,1,scripts/acceptance.mjs,a20218ee5223df55206310a7f1b57c2a3a199adf01fb57cbfe66e1bb434459c0,true,public/synthetic,false
 PS1-QS01,quickstart 样例与金标一致,1/1,1,scripts/acceptance.mjs,0c4899abfe21e8df340777dbee41f6d816f2f6a0a1da0848e77fae90b3bfc3d5,true,synthetic/quickstart,true
