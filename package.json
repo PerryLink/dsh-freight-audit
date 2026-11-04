@@ -1,6 +1,6 @@
 {
   "name": "dsh-freight-audit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Freight ratecard versioning, carrier bill audit, recovery summary and variance export.",
   "type": "module",
   "main": "./lib/plugin/index.js",
