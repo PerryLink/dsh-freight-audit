@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660" role="img" aria-label="dsh-freight-audit structure: a carrier bill CSV and a ratecard JSON feed one per-shipment ledger; each row computes expected cost from base + per-kg x weight plus fuel, records the signed variance in cents, and is split around a central zero axis (undercharge left, overcharge right); the recovery scoreboard sums over and under into a net; two R1 write gates export a dispute CSV and an xlsx workpaper, while a read-only rail holds zone_lookup, ratecard_validate and accessorial_check">
+<title>dsh-freight-audit: one signed-variance ledger, two write gates, one read-only rail</title>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#131a2a"/>
+    <stop offset="1" stop-color="#0c1016"/>
+  </linearGradient>
+  <filter id="soft" x="-30%" y="-30%" width="160%" height="180%">
+    <feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#000000" flood-opacity="0.55"/>
+  </filter>
+  <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+    <circle cx="1.4" cy="1.4" r="1.4" fill="#26314a"/>
+  </pattern>
+</defs>
+<rect width="1100" height="660" fill="url(#bg)"/>
+<rect width="1100" height="660" fill="url(#dots)" opacity=".38"/>
+<text x="44" y="54" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="30" font-weight="700" text-anchor="start">dsh-freight-audit</text>
+<text x="44" y="80" fill="#a8b1c4" font-family="'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', ui-sans-serif, sans-serif" font-size="15" font-weight="400" text-anchor="start">bills × ratecard → expected → signed variance in cents → exports</text>
+<rect x="782" y="36" width="274" height="32" rx="16" fill="#242d42"/>
+<text x="919" y="57" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="middle">SYN-LTL | v2026 · 12 bills · cents</text>
+<line x1="44" y1="100" x2="1056" y2="100" stroke="#1e2636" stroke-width="1.5"/>
+<g filter="url(#soft)">
+<rect x="40" y="112" width="430" height="94" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5"/>
+</g>
+<text x="58" y="138" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="14" font-weight="700" text-anchor="start">① BILLS CSV</text>
+<text x="452" y="138" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="end">12 rows</text>
+<text x="58" y="162" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="14" font-weight="400" text-anchor="start">shipment_id, weight_kg, billed</text>
+<text x="58" y="186" fill="#a8b1c4" font-family="'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', ui-sans-serif, sans-serif" font-size="12" font-weight="400" text-anchor="start">synthetic fixture · originals untouched</text>
+<g filter="url(#soft)">
+<rect x="486" y="112" width="574" height="94" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5"/>
+</g>
+<text x="504" y="138" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="14" font-weight="700" text-anchor="start">② RATECARD JSON</text>
+<text x="1042" y="138" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="end">carrier|version</text>
+<text x="504" y="162" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="14" font-weight="400" text-anchor="start">SYN-LTL | v2026 · base 1500 + per_kg 120 · fuel 8.5%</text>
+<text x="504" y="186" fill="#a8b1c4" font-family="'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', ui-sans-serif, sans-serif" font-size="12" font-weight="400" text-anchor="start">window 2026-01-01 → 2026-12-31 · overlap rejected</text>
+<line x1="255" y1="206" x2="255" y2="216" stroke="#8496f5" stroke-width="2"/>
+<path d="M250 214 L255 220 L260 214" fill="none" stroke="#8496f5" stroke-width="2" stroke-linecap="round"/>
+<line x1="1000" y1="206" x2="1000" y2="216" stroke="#8496f5" stroke-width="2"/>
+<path d="M995 214 L1000 220 L1005 214" fill="none" stroke="#8496f5" stroke-width="2" stroke-linecap="round"/>
+<g filter="url(#soft)">
+<rect x="40" y="222" width="1020" height="286" rx="20" fill="#171e2d" stroke="#2b3448" stroke-width="1.5"/>
+</g>
+<text x="58" y="250" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="15" font-weight="700" text-anchor="start">PER-SHIPMENT LEDGER</text>
+<rect x="246" y="236" width="56" height="20" rx="10.0" fill="#242d42"/>
+<text x="274.0" y="250.32" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="700" text-anchor="middle">R1</text>
+<text x="1042" y="250" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="end">expected = round((base + per_kg × kg) × (1 + fuel%))</text>
+<line x1="56" y1="260" x2="1044" y2="260" stroke="#1e2636" stroke-width="1.2"/>
+<text x="56" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">shipment</text>
+<text x="226" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">kg</text>
+<text x="356" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">billed</text>
+<text x="372" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">under −</text>
+<text x="616" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="middle">0</text>
+<text x="848" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">over +</text>
+<text x="944" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">Δ variance</text>
+<text x="1044" y="276" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">expected</text>
+<rect x="384" y="280" width="232" height="220" rx="8" fill="#e0a85a" opacity=".07"/>
+<rect x="616" y="280" width="232" height="220" rx="8" fill="#8496f5" opacity=".08"/>
+<line x1="616" y1="282" x2="616" y2="500" stroke="#8496f5" stroke-width="1.4" stroke-dasharray="3 5" opacity=".55"/>
+<text x="56" y="294" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0001</text>
+<text x="226" y="294" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">10</text>
+<text x="356" y="294" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2930</text>
+<circle cx="616" cy="289.4" r="2.6" fill="#737b8d"/>
+<text x="944" y="294" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">0</text>
+<text x="1044" y="294" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2930</text>
+<line x1="56" y1="300.5" x2="1044" y2="300.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="312" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0002</text>
+<text x="226" y="312" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">12</text>
+<text x="356" y="312" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">3100</text>
+<rect x="526.8" y="303.2" width="89.2" height="8.4" rx="3.2" fill="#e0a85a"/>
+<text x="944" y="312" fill="#e0a85a" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">−90</text>
+<text x="1044" y="312" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">3190</text>
+<line x1="56" y1="318.5" x2="1044" y2="318.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="330" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0003</text>
+<text x="226" y="330" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">8</text>
+<text x="356" y="330" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2680</text>
+<rect x="616.0" y="321.2" width="10.9" height="8.4" rx="3.2" fill="#8496f5"/>
+<text x="944" y="330" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">+11</text>
+<text x="1044" y="330" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2669</text>
+<line x1="56" y1="336.5" x2="1044" y2="336.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="348" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0004</text>
+<text x="226" y="348" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">25</text>
+<text x="356" y="348" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">4900</text>
+<rect x="616.0" y="339.2" width="16.9" height="8.4" rx="3.2" fill="#8496f5"/>
+<text x="944" y="348" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">+17</text>
+<text x="1044" y="348" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">4883</text>
+<line x1="56" y1="354.5" x2="1044" y2="354.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="366" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0005</text>
+<text x="226" y="366" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">5</text>
+<text x="356" y="366" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2200</text>
+<rect x="537.7" y="357.2" width="78.3" height="8.4" rx="3.2" fill="#e0a85a"/>
+<text x="944" y="366" fill="#e0a85a" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">−79</text>
+<text x="1044" y="366" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2279</text>
+<line x1="56" y1="372.5" x2="1044" y2="372.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="384" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0006</text>
+<text x="226" y="384" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">30</text>
+<text x="356" y="384" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">5300</text>
+<rect x="384.0" y="375.2" width="232.0" height="8.4" rx="3.2" fill="#e0a85a"/>
+<text x="944" y="384" fill="#e0a85a" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="end">−234</text>
+<text x="1044" y="384" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">5534</text>
+<line x1="56" y1="390.5" x2="1044" y2="390.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="402" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0007</text>
+<text x="226" y="402" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">15</text>
+<text x="356" y="402" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">3560</text>
+<rect x="595.2" y="393.2" width="20.8" height="8.4" rx="3.2" fill="#e0a85a"/>
+<text x="944" y="402" fill="#e0a85a" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">−21</text>
+<text x="1044" y="402" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">3581</text>
+<line x1="56" y1="408.5" x2="1044" y2="408.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="420" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0008</text>
+<text x="226" y="420" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">20</text>
+<text x="356" y="420" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">4000</text>
+<rect x="386.0" y="411.2" width="230.0" height="8.4" rx="3.2" fill="#e0a85a"/>
+<text x="944" y="420" fill="#e0a85a" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="end">−232</text>
+<text x="1044" y="420" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">4232</text>
+<line x1="56" y1="426.5" x2="1044" y2="426.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="438" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0009</text>
+<text x="226" y="438" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">40</text>
+<text x="356" y="438" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">6900</text>
+<rect x="616.0" y="429.2" width="63.5" height="8.4" rx="3.2" fill="#8496f5"/>
+<text x="944" y="438" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">+64</text>
+<text x="1044" y="438" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">6836</text>
+<line x1="56" y1="444.5" x2="1044" y2="444.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="456" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0010</text>
+<text x="226" y="456" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">10</text>
+<text x="356" y="456" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2930</text>
+<circle cx="616" cy="451.4" r="2.6" fill="#737b8d"/>
+<text x="944" y="456" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">0</text>
+<text x="1044" y="456" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">2930</text>
+<line x1="56" y1="462.5" x2="1044" y2="462.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="474" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0011</text>
+<text x="226" y="474" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">18</text>
+<text x="356" y="474" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">3800</text>
+<rect x="446.5" y="465.2" width="169.5" height="8.4" rx="3.2" fill="#e0a85a"/>
+<text x="944" y="474" fill="#e0a85a" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="end">−171</text>
+<text x="1044" y="474" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">3971</text>
+<line x1="56" y1="480.5" x2="1044" y2="480.5" stroke="#1e2636" stroke-width="1" opacity=".55"/>
+<text x="56" y="492" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="start">SHP-0012</text>
+<text x="226" y="492" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">22</text>
+<text x="356" y="492" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">4500</text>
+<rect x="616.0" y="483.2" width="7.9" height="8.4" rx="3.2" fill="#8496f5"/>
+<text x="944" y="492" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">+8</text>
+<text x="1044" y="492" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="400" text-anchor="end">4492</text>
+<g filter="url(#soft)">
+<rect x="40" y="528" width="352" height="108" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5"/>
+</g>
+<text x="58" y="552" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="start">RECOVERY · freight.recovery_summary</text>
+<text x="376" y="552" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="end">R0</text>
+<text x="58" y="574" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="start">over</text>
+<text x="58" y="600" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="22" font-weight="700" text-anchor="start">+100</text>
+<text x="176" y="574" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="start">under</text>
+<text x="176" y="600" fill="#e0a85a" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="22" font-weight="700" text-anchor="start">−827</text>
+<text x="304" y="574" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="start">net</text>
+<text x="304" y="600" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="22" font-weight="700" text-anchor="start">−727</text>
+<text x="58" y="624" fill="#a8b1c4" font-family="'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', ui-sans-serif, sans-serif" font-size="11" font-weight="400" text-anchor="start">over + under = net · from the bills table</text>
+<g filter="url(#soft)">
+<rect x="408" y="528" width="352" height="108" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5"/>
+</g>
+<text x="426" y="552" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="start">WRITE GATES · R1</text>
+<text x="742" y="552" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="end">→ exports/</text>
+<text x="426" y="576" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="start">freight-dispute-SYN-LTL-v2026.csv</text>
+<text x="426" y="594" fill="#a8b1c4" font-family="'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', ui-sans-serif, sans-serif" font-size="11" font-weight="400" text-anchor="start">10 rows · '=+-@ neutralised · safe-path</text>
+<text x="426" y="616" fill="#f0f3f9" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="12" font-weight="400" text-anchor="start">freight-SYN-LTL-v2026.xlsx</text>
+<text x="742" y="616" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="end">12 rows</text>
+<text x="426" y="632" fill="#a8b1c4" font-family="'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', ui-sans-serif, sans-serif" font-size="11" font-weight="400" text-anchor="start">sheet Audit · billed/expected/Δ</text>
+<g filter="url(#soft)">
+<rect x="776" y="528" width="284" height="108" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5"/>
+</g>
+<text x="794" y="552" fill="#8496f5" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="start">READ-ONLY RAIL</text>
+<text x="1042" y="552" fill="#737b8d" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="end">R0</text>
+<text x="794" y="576" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="start">zone_lookup · zone 3 → 23.27</text>
+<text x="794" y="596" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="start">ratecard_validate · 3 issues</text>
+<text x="794" y="616" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="start">accessorial_check · 4 issues</text>
+<text x="794" y="632" fill="#737b8d" font-family="'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', ui-sans-serif, sans-serif" font-size="11" font-weight="400" text-anchor="start">yuan as listed · never folded in</text>
+<line x1="44" y1="642" x2="1056" y2="642" stroke="#1e2636" stroke-width="1.2" opacity=".8"/>
+<text x="44" y="653" fill="#a8b1c4" font-family="Consolas, 'SFMono-Regular', Menlo, ui-monospace, monospace" font-size="11.5" font-weight="400" text-anchor="start">R1: ratecard · audit · dispute · export   |   R0: zone_lookup · recovery_summary · ratecard_validate · accessorial_check   |   no network · no model · originals untouched</text>
+</svg>

@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-dark.svg">
-  <img src="docs/assets/dsh-freight-audit-flow-light.svg" width="100%" alt="dsh-freight-audit 数据流：运费账单 CSV + 费率卡 JSON → freight.ratecard 版本化 → freight.audit 逐票算应计与差额 → freight.dispute 导出争议 CSV → 底稿与争议单写入 $DSH_HOME/storages/dsh-freight-audit/exports；freight.zone_lookup、freight.recovery_summary 与两个校验工具只读">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-freight-audit-hero-zh-light.webp" width="100%" alt="dsh-freight-audit 配图：左列是标题与两行价值句；右侧把 SHP-0004 一票摊开——账单 4900 分 − 应计 4883 分 = 差额 +17 分，下方是 12 票差额分布（多收 4 · 零差 2 · 少收 6），合计多收 +100 / 少收 −827 / 净额 −727 分，10 票进争议 CSV、12 行进 xlsx 底稿">
 </picture>
 
 # dsh-freight-audit
@@ -39,6 +39,11 @@ dsh plugin --profile <profile> add dsh-freight-audit
 
 - **适合**：几十到几千票的月结运费账单（CSV）；对账期初先查差额、再决定向承运商追多少。
 - **不适合**：没有重量或金额的手工记录；直连 TMS / 承运商门户（本包不连外部系统）；替代正式索赔或法律程序。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-freight-audit-flow-v5-light.svg" width="100%" alt="dsh-freight-audit 结构：账单 CSV 与费率卡 JSON 进入逐票对账台——每票按 round((base + per_kg × kg) × (1 + fuel%)) 算应计，差额以分记并沿零轴分流，左少收、右多收；12 票写入本地 bills 表，汇总为多收 +100 / 少收 −827 / 净额 −727 分；两个 R1 写入闸门导出争议 CSV（10 票）与 xlsx 底稿（12 行），右下只读侧轨是 zone_lookup / ratecard_validate / accessorial_check">
+</picture>
 
 ## 三步上手
 
@@ -295,7 +300,7 @@ node scripts/acceptance.mjs                               # 重跑公开/合成�
 node samples/quickstart/run.mjs --check                   # 合成样例，应输出 quickstart ok
 ```
 
-当前版本 `0.1.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs`（9 个测试文件、28 个用例；`pnpm test` 已内置构建步骤）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python；SVG 流程图深浅双版、五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
+当前版本 `0.1.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs`（9 个测试文件、28 个用例；`pnpm test` 已内置构建步骤）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python/Pillow 出 1440×576 hero 双语深浅 webp，手写 SVG 出 1100×660 结构图深浅双版，五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 

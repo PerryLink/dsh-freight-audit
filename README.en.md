@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-dark.svg">
-  <img src="docs/assets/dsh-freight-audit-flow-light.svg" width="100%" alt="dsh-freight-audit data flow: carrier bill CSV + ratecard JSON → freight.ratecard versioning → freight.audit per-shipment expected/variance → freight.dispute CSV export → workpaper and dispute file under $DSH_HOME/storages/dsh-freight-audit/exports; freight.zone_lookup, freight.recovery_summary and both validators are read-only">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-hero-en-dark.webp">
+  <img src="docs/assets/dsh-freight-audit-hero-en-light.webp" width="100%" alt="dsh-freight-audit banner: the title and two value lines on the left; on the right one shipment opened as an audit tape — billed 4900 − expected 4883 = variance +17 cents — above the 12-bill variance distribution (over 4, zero 2, under 6), totaling over +100 / under −827 / net −727 cents, with 10 rows in the dispute CSV and 12 rows in the xlsx workpaper">
 </picture>
 
 # dsh-freight-audit
@@ -39,6 +39,11 @@ A local pipeline for freight reconciliation: `freight.ratecard` stores one carri
 
 - **Good fit**: monthly freight bills of tens to thousands of shipments (CSV); checking the variance first, then deciding how much to recover from the carrier.
 - **Not a fit**: manual records without weight or amount; direct TMS / carrier-portal integration (this package connects to no external system); replacing a formal claim or legal process.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-freight-audit-flow-v5-light.svg" width="100%" alt="dsh-freight-audit structure: the bills CSV and the ratecard JSON feed a per-shipment ledger — each row computes expected as round((base + per_kg × kg) × (1 + fuel%)), records the variance in cents and splits around a central zero axis, undercharge left and overcharge right; 12 rows are stored in the local bills table and summed to over +100 / under −827 / net −727 cents; two R1 write gates export the dispute CSV (10 rows) and the xlsx workpaper (12 rows), while the read-only rail holds zone_lookup, ratecard_validate and accessorial_check">
+</picture>
 
 ## Three-step setup
 
@@ -297,7 +302,7 @@ node scripts/acceptance.mjs                               # re-run the public/sy
 node samples/quickstart/run.mjs --check                   # synthetic sample, should print quickstart ok
 ```
 
-Current version `0.1.1` (matches `package.json`). Tests: `node --test test/*.test.mjs` (9 test files, 28 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python; light/dark SVG flow pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
+Current version `0.1.1` (matches `package.json`). Tests: `node --test test/*.test.mjs` (9 test files, 28 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow for the 1440×576 bilingual light/dark hero webp, hand-written SVG for the 1100×660 light/dark structure pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 

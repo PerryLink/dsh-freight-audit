@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-dark.svg">
-  <img src="docs/assets/dsh-freight-audit-flow-light.svg" width="100%" alt="Fluxo de dados do dsh-freight-audit: CSV de faturas da transportadora + JSON de tarifa → versionamento com freight.ratecard → freight.audit calcula esperado/variação por embarque → freight.dispute exporta o CSV de disputa → planilha de trabalho e arquivo de disputa em $DSH_HOME/storages/dsh-freight-audit/exports; freight.zone_lookup, freight.recovery_summary e os dois validadores são somente leitura">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-hero-en-dark.webp">
+  <img src="docs/assets/dsh-freight-audit-hero-en-light.webp" width="100%" alt="Imagem do dsh-freight-audit: à esquerda o título e duas linhas de valor; à direita, um embarque aberto como fita de auditoria — faturado 4900 − esperado 4883 = variação +17 centavos — sobre a distribuição da variação de 12 faturas (cobrança a mais 4, zero 2, cobrança a menos 6), com totais +100 / −827 / líquido −727 centavos; 10 linhas no CSV de disputa e 12 linhas na planilha xlsx">
 </picture>
 
 # dsh-freight-audit
@@ -39,6 +39,11 @@ Uma canalização local para conciliação de frete: `freight.ratecard` guarda u
 
 - **Indicado para**: faturas mensais de frete de dezenas a milhares de embarques (CSV); conferir primeiro a variação e depois decidir quanto cobrar da transportadora.
 - **Não indicado para**: registros manuais sem peso ou valor; integração direta com TMS / portais de transportadoras (este pacote não se conecta a nenhum sistema externo); substituir uma reclamação formal ou processo legal.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-freight-audit-flow-v5-light.svg" width="100%" alt="Estrutura do dsh-freight-audit: o CSV de faturas e o JSON de tarifa entram num livro por embarque — cada linha calcula o esperado como round((base + per_kg × kg) × (1 + fuel%)), registra a variação em centavos e se divide em torno de um eixo zero, cobrança a menos à esquerda e a mais à direita; 12 linhas são gravadas na tabela local bills e somam +100 / −827 / líquido −727 centavos; duas portas de escrita R1 exportam o CSV de disputa (10 linhas) e a planilha xlsx (12 linhas), e o trilho somente leitura mantém zone_lookup, ratecard_validate e accessorial_check">
+</picture>
 
 ## Instalação em três passos
 
@@ -297,7 +302,7 @@ node scripts/acceptance.mjs                               # repetir a aceitaçã
 node samples/quickstart/run.mjs --check                   # amostra sintética; deve imprimir quickstart ok
 ```
 
-Versão atual `0.1.1` (confere com `package.json`). Testes: `node --test test/*.test.mjs` (9 arquivos de teste, 28 casos; `pnpm test` compila primeiro). As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python; par SVG de fluxo claro/escuro compartilhado pelos cinco idiomas) e podem ser repetidas: `python scripts/gen-readme-assets.py`.
+Versão atual `0.1.1` (confere com `package.json`). Testes: `node --test test/*.test.mjs` (9 arquivos de teste, 28 casos; `pnpm test` compila primeiro). As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow para o hero bilíngue 1440×576 claro/escuro e SVG escrito à mão para o par de estrutura 1100×660 claro/escuro compartilhado pelos cinco idiomas) e podem ser repetidas: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 

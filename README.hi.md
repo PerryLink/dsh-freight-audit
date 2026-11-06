@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-dark.svg">
-  <img src="docs/assets/dsh-freight-audit-flow-light.svg" width="100%" alt="dsh-freight-audit डेटा फ़्लो: कैरियर बिल CSV + रेटकार्ड JSON → freight.ratecard से वर्ज़निंग → freight.audit प्रति शिपमेंट अपेक्षित/अंतर → freight.dispute विवाद CSV निर्यात → $DSH_HOME/storages/dsh-freight-audit/exports में वर्कपेपर और विवाद फ़ाइल; freight.zone_lookup, freight.recovery_summary और दोनों वैलिडेटर रीड-ओनली हैं">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-hero-en-dark.webp">
+  <img src="docs/assets/dsh-freight-audit-hero-en-light.webp" width="100%" alt="dsh-freight-audit चित्र: बाईं ओर शीर्षक और दो मूल्य-पंक्तियाँ; दाईं ओर एक शिपमेंट ऑडिट टेप के रूप में — billed 4900 − expected 4883 = अंतर +17 सेंट — और नीचे 12 बिलों का अंतर वितरण (अधिक 4, शून्य 2, कम 6), कुल +100 / −827 / नेट −727 सेंट; 10 पंक्तियाँ विवाद CSV में और 12 पंक्तियाँ xlsx वर्कपेपर में">
 </picture>
 
 # dsh-freight-audit
@@ -39,6 +39,11 @@ dsh plugin --profile <profile> add dsh-freight-audit
 
 - **किसके लिए उपयुक्त**: कुछ दर्जन से हज़ारों शिपमेंट वाले मासिक फ़्रेट बिल (CSV); पहले अंतर देखें, फिर तय करें कि कैरियर से कितना वसूलना है।
 - **किसके लिए नहीं**: बिना वज़न या राशि वाले हाथ के रिकॉर्ड; सीधा TMS / कैरियर पोर्टल इंटीग्रेशन (यह पैकेज किसी बाहरी सिस्टम से नहीं जुड़ता); औपचारिक दावे या कानूनी प्रक्रिया की जगह लेना।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-freight-audit-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-freight-audit-flow-v5-light.svg" width="100%" alt="dsh-freight-audit संरचना: बिल CSV और रेटकार्ड JSON प्रति-शिपमेंट बही में जाते हैं — हर पंक्ति अपेक्षित लागत round((base + per_kg × kg) × (1 + fuel%)) से निकालती है, अंतर सेंट में दर्ज करती है और शून्य अक्ष के दोनों ओर बँटती है, बाएँ कम वसूली और दाएँ अधिक वसूली; 12 पंक्तियाँ स्थानीय bills तालिका में लिखी जाती हैं और +100 / −827 / नेट −727 सेंट में जुड़ती हैं; दो R1 राइट गेट विवाद CSV (10 पंक्तियाँ) और xlsx वर्कपेपर (12 पंक्तियाँ) निर्यात करते हैं, और नीचे दाएँ केवल-पढ़ने वाला रेल zone_lookup, ratecard_validate और accessorial_check रखता है">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -297,7 +302,7 @@ node scripts/acceptance.mjs                               # सार्वज�
 node samples/quickstart/run.mjs --check                   # सिंथेटिक नमूना; quickstart ok छापना चाहिए
 ```
 
-मौजूदा वर्ज़न `0.1.1` (`package.json` से मेल)। परीक्षण: `node --test test/*.test.mjs` (9 परीक्षण फ़ाइलें, 28 केस; `pnpm test` पहले बिल्ड करता है)। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से प्रोग्रामेटिक रूप से बनती हैं (Python; हल्का/गहरा SVG फ़्लो जोड़ी पाँचों भाषाओं में साझा) और दोबारा चलाई जा सकती हैं: `python scripts/gen-readme-assets.py`.
+मौजूदा वर्ज़न `0.1.1` (`package.json` से मेल)। परीक्षण: `node --test test/*.test.mjs` (9 परीक्षण फ़ाइलें, 28 केस; `pnpm test` पहले बिल्ड करता है)। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से प्रोग्रामेटिक रूप से बनती हैं (Python/Pillow से 1440×576 द्विभाषी हल्का/गहरा hero webp और हाथ से लिखा SVG 1100×660 हल्का/गहरा संरचना जोड़ी, पाँचों भाषाओं में साझा) और दोबारा चलाई जा सकती हैं: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 
