@@ -35,7 +35,7 @@ dsh plugin --profile <profile> add dsh-freight-audit
 
 ## 它是什么
 
-运费对账的本地流水线：`freight.ratecard` 把某个承运商某个版本的费率卡存进本地存储域（基础价、每公斤价、燃油百分比、生效区间），`freight.audit` 读入一车 CSV 账单，逐票按 `base_cents + per_kg_cents × weight_kg` 再加 `fuel_pct` 算应计金额，差额以分为单位记在账单上，`freight.recovery_summary` 汇总多收/少收/净额，`freight.dispute` 与 `freight.export` 分别导出争议 CSV 与 xlsx 底稿。全部计算在本机完成——不联网、不调用模型、不上传；输入由会话读取后作为参数传给工具，原文件不动。
+运费对账的本地流水线：`freight_ratecard` 把某个承运商某个版本的费率卡存进本地存储域（基础价、每公斤价、燃油百分比、生效区间），`freight_audit` 读入一车 CSV 账单，逐票按 `base_cents + per_kg_cents × weight_kg` 再加 `fuel_pct` 算应计金额，差额以分为单位记在账单上，`freight_recovery_summary` 汇总多收/少收/净额，`freight_dispute` 与 `freight_export` 分别导出争议 CSV 与 xlsx 底稿。全部计算在本机完成——不联网、不调用模型、不上传；输入由会话读取后作为参数传给工具，原文件不动。
 
 - **适合**：几十到几千票的月结运费账单（CSV）；对账期初先查差额、再决定向承运商追多少。
 - **不适合**：没有重量或金额的手工记录；直连 TMS / 承运商门户（本包不连外部系统）；替代正式索赔或法律程序。
@@ -95,29 +95,29 @@ dsh plugin --profile <profile> add dsh-freight-audit
 
 ## 核心能力
 
-- **费率卡版本化** —— `freight.ratecard` 的 `set` 写入一张费率卡，`list` 读出全部；同一承运商的两个版本生效期重叠时响亮拒绝（`E_FREIGHT_RATE_OVERLAP`），旧版本未填 `effective_to` 视为无限期。
-- **逐票审计与差额** —— `freight.audit` 解析账单 CSV，按费率卡算每票应计金额与差额（单位：分），把逐票结果写入本地存储域，并返回异常票号列表。
-- **追回汇总** —— `freight.recovery_summary` 汇总某承运商某版本的多收、少收与净额，只读，不覆盖已存账单。
-- **争议单导出** —— `freight.dispute` 只挑出差额非零的票，导出争议复核 CSV；文本字段做公式注入中和，路径经 safe-path 守卫，不向承运商提交任何内容。
-- **底稿导出** —— `freight.export` 把逐票 `billed/expected/variance` 写成一张 xlsx 工作表，返回路径与行数。
-- **zone 公布价查询** —— `freight.zone_lookup` 从公开 zone/费率 CSV 查某一 zone 的公布价，只读，不参与审计计算。
-- **费率卡与附加费体检** —— `freight.ratecard_validate` 检查金额字段、燃油比例、生效窗口与版本重叠；`freight.accessorial_check` 检查附加费类型、整数金额、重复、约定清单与总额上限。
+- **费率卡版本化** —— `freight_ratecard` 的 `set` 写入一张费率卡，`list` 读出全部；同一承运商的两个版本生效期重叠时响亮拒绝（`E_FREIGHT_RATE_OVERLAP`），旧版本未填 `effective_to` 视为无限期。
+- **逐票审计与差额** —— `freight_audit` 解析账单 CSV，按费率卡算每票应计金额与差额（单位：分），把逐票结果写入本地存储域，并返回异常票号列表。
+- **追回汇总** —— `freight_recovery_summary` 汇总某承运商某版本的多收、少收与净额，只读，不覆盖已存账单。
+- **争议单导出** —— `freight_dispute` 只挑出差额非零的票，导出争议复核 CSV；文本字段做公式注入中和，路径经 safe-path 守卫，不向承运商提交任何内容。
+- **底稿导出** —— `freight_export` 把逐票 `billed/expected/variance` 写成一张 xlsx 工作表，返回路径与行数。
+- **zone 公布价查询** —— `freight_zone_lookup` 从公开 zone/费率 CSV 查某一 zone 的公布价，只读，不参与审计计算。
+- **费率卡与附加费体检** —— `freight_ratecard_validate` 检查金额字段、燃油比例、生效窗口与版本重叠；`freight_accessorial_check` 检查附加费类型、整数金额、重复、约定清单与总额上限。
 - **纯本地** —— 源码中没有 HTTP / DNS / WebSocket 调用；不连接 TMS / 承运商系统，不上传数据。
 
 ### 工具面
 
-工具名是稳定 API；写本地文件的工具标 **R1（本地写）**，只读工具标 **R0**。`freight.audit` 会把逐票结果写入本地存储域，因此同样标 R1。
+工具名是稳定 API；写本地文件的工具标 **R1（本地写）**，只读工具标 **R0**。`freight_audit` 会把逐票结果写入本地存储域，因此同样标 R1。
 
 | 工具 | 用途 | 风险 |
 |---|---|---|
-| `freight.ratecard` | 注册/版本化运费费率卡；`set` 写入，`list` 只读 | R1 本地写（`set`） |
-| `freight.audit` | 按费率卡审核承运商账单，逐票写入应计与差额 | R1 本地写 |
-| `freight.zone_lookup` | 查询公开的区划/费率表 | R0 只读 |
-| `freight.recovery_summary` | 汇总多收/少收/净追回金额 | R0 只读 |
-| `freight.dispute` | 导出用于争议复核的差异 CSV | R1 本地写 |
-| `freight.export` | 导出审计 xlsx 底稿 | R1 本地写 |
-| `freight.ratecard_validate` | 费率卡体检：金额、燃油比例、生效期、版本重叠 | R0 只读 |
-| `freight.accessorial_check` | 附加费校验：类型、金额、重复、约定清单、总额上限 | R0 只读 |
+| `freight_ratecard` | 注册/版本化运费费率卡；`set` 写入，`list` 只读 | R1 本地写（`set`） |
+| `freight_audit` | 按费率卡审核承运商账单，逐票写入应计与差额 | R1 本地写 |
+| `freight_zone_lookup` | 查询公开的区划/费率表 | R0 只读 |
+| `freight_recovery_summary` | 汇总多收/少收/净追回金额 | R0 只读 |
+| `freight_dispute` | 导出用于争议复核的差异 CSV | R1 本地写 |
+| `freight_export` | 导出审计 xlsx 底稿 | R1 本地写 |
+| `freight_ratecard_validate` | 费率卡体检：金额、燃油比例、生效期、版本重叠 | R0 只读 |
+| `freight_accessorial_check` | 附加费校验：类型、金额、重复、约定清单、总额上限 | R0 只读 |
 
 ### 输入与输出
 
@@ -167,7 +167,7 @@ node samples/quickstart/run.mjs --check  # 与金标比对，结尾 quickstart o
 
 ## 配置
 
-本插件没有 Schemastery `Config` 配置键——`cordis.patch.yml` 只 `insert` 一行（见「三步上手」），没有可覆盖的插件级配置项。费率卡字段在调用 `freight.ratecard` 时传入：
+本插件没有 Schemastery `Config` 配置键——`cordis.patch.yml` 只 `insert` 一行（见「三步上手」），没有可覆盖的插件级配置项。费率卡字段在调用 `freight_ratecard` 时传入：
 
 | 字段 | 类型 | 含义 |
 |---|---|---|
@@ -191,7 +191,7 @@ node samples/quickstart/run.mjs --check  # 与金标比对，结尾 quickstart o
 <details>
 <summary>完整取值：附加费类型与错误码</summary>
 
-`freight.accessorial_check` 认识 12 种附加费类型：`fuel`、`detention`、`liftgate`、`residential`、`inside_delivery`、`appointment`、`oversize`、`hazmat`、`waiting_time`、`reweigh`、`redelivery`、`storage`。
+`freight_accessorial_check` 认识 12 种附加费类型：`fuel`、`detention`、`liftgate`、`residential`、`inside_delivery`、`appointment`、`oversize`、`hazmat`、`waiting_time`、`reweigh`、`redelivery`、`storage`。
 
 错误统一为 `<一句人话>（E_XXX）｜下一步：<动作>`；错误码包括：`E_FREIGHT_CSV_INVALID`、`E_FREIGHT_RATE_MISSING`、`E_FREIGHT_RATE_OVERLAP`、`E_FREIGHT_EXPORT_FAILED`、`E_FREIGHT_PATH_INVALID`、`E_FREIGHT_PATH_NOT_ALLOWED`。体检与附加费工具还会返回 `E_FREIGHT_RATE_INVALID` 与 `E_FREIGHT_ACCESSORIAL_*` 问题码。逐条症状/原因/动作见 [TROUBLESHOOTING.md](TROUBLESHOOTING.md)。
 
@@ -294,13 +294,13 @@ node samples/quickstart/run.mjs --check  # 与金标比对，结尾 quickstart o
 
 ```sh
 pnpm install --frozen-lockfile                            # node >=24.9 <25
-pnpm build && pnpm lint && pnpm typecheck && pnpm test    # tsc 构建 + lint + 28 个 node --test 用例
+pnpm build && pnpm lint && pnpm typecheck && pnpm test    # tsc 构建 + lint + 29 个 node --test 用例
 pnpm gate:sku12                                           # 验收门禁（ACCEPTANCE.csv）
 node scripts/acceptance.mjs                               # 重跑公开/合成验收
 node samples/quickstart/run.mjs --check                   # 合成样例，应输出 quickstart ok
 ```
 
-当前版本 `0.1.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs`（9 个测试文件、28 个用例；`pnpm test` 已内置构建步骤）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python/Pillow 出 1440×576 hero 双语深浅 webp，手写 SVG 出 1100×660 结构图深浅双版，五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
+当前版本 `0.2.0`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs`（10 个测试文件、29 个用例；`pnpm test` 已内置构建步骤）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python/Pillow 出 1440×576 hero 双语深浅 webp，手写 SVG 出 1100×660 结构图深浅双版，五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 
@@ -308,7 +308,7 @@ Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics
 
 本项目是 [PerryLink](https://github.com/PerryLink) 维护的 DeepSeek Harness 插件家族成员（全部 Apache-2.0）。如果这个插件帮到了你，**给个 star**——它不解锁任何功能，但会让下一个人更容易找到它。
 
-- [@PerryLink](https://github.com/PerryLink) —— 创建者与维护者：费率卡版本化与逐票审计引擎、八个 `freight.*` 工具、quickstart 样例与验收套件、五语文档。
+- [@PerryLink](https://github.com/PerryLink) —— 创建者与维护者：费率卡版本化与逐票审计引擎、八个 `freight_*` 工具、quickstart 样例与验收套件、五语文档。
 
 ## License
 

@@ -5,18 +5,18 @@
 
 ## 0.1.0-alpha.1 — dispute CSV (2026-10-31)
 
-- Added `freight.dispute`; read-only audit + local CSV; tests 3/3; no carrier submission.
+- Added `freight_dispute`; read-only audit + local CSV; tests 3/3; no carrier submission.
 
 ### latest moved
 - `latest`/`next` verified alpha.1 after propagation.
 
 ## 0.1.0-alpha.2 — zone lookup (2026-10-31)
 
-- Added `freight.zone_lookup`; MIT UPS 40 lb zone sample; 5 gate rows.
+- Added `freight_zone_lookup`; MIT UPS 40 lb zone sample; 5 gate rows.
 
 ### latest moved
 - `latest`/`next` verified alpha.2 after propagation.
 
 ## 0.1.0-alpha.3 — recovery summary (2026-10-31)
 
-- Added `freight.recovery_summary`; 6 gate rows.
+- Added `freight_recovery_summary`; 6 gate rows.

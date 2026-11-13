@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.2.0] — 2026-11-13
+
+### Breaking
+
+- **Tool names no longer contain a dot.** All eight tools are now
+  `freight_ratecard`, `freight_audit`, `freight_export`, `freight_dispute`,
+  `freight_zone_lookup`, `freight_recovery_summary`, `freight_ratecard_validate`
+  and `freight_accessorial_check`. Providers validate `tools[].name` against
+  `^[a-zA-Z0-9_-]+$`; the old dotted spelling invalidated the whole `tools`
+  array, so the plugin registered but every request carrying its tools was
+  rejected with `Invalid 'tools[N].name'`. Minor bump because tool names are
+  part of the 0.1.0 compatibility promise.
+- Migration: update prompts, saved calls, scripts and permission rules that
+  still use the old dotted spelling to the underscore names above. Tool
+  arguments, output shapes and the R0/R1 boundaries are unchanged.
+- `test/tool-name-wire.test.mjs` pins the wire pattern, so a new tool cannot
+  reintroduce a dot, drop the `freight_` namespace or duplicate an existing name.
+- Earlier changelog entries, the five-language READMEs, docs, diagrams and the
+  quickstart sample use the underscore spelling, so a repository-wide search no
+  longer finds dotted tool names.
+
 ## [0.1.0] — 2026-11-03
 
 ### Stable
@@ -17,13 +38,13 @@
 
 ### Added
 
-- `freight.accessorial_check`: accessorial charge validation — known charge types, non-negative integer amounts, duplicates, agreed-list membership and an optional total cap. Verified by `node --test test/*.test.mjs` (13/13).
+- `freight_accessorial_check`: accessorial charge validation — known charge types, non-negative integer amounts, duplicates, agreed-list membership and an optional total cap. Verified by `node --test test/*.test.mjs` (13/13).
 
 ## [Unreleased]
 
 ### Added
 
-- `freight.ratecard_validate`: rate-card hygiene — non-negative money fields, fuel share 0-100, valid effective window and overlapping versions per carrier. Read-only. Verified by `node --test test/*.test.mjs` (9/9).
+- `freight_ratecard_validate`: rate-card hygiene — non-negative money fields, fuel share 0-100, valid effective window and overlapping versions per carrier. Read-only. Verified by `node --test test/*.test.mjs` (9/9).
 
 ## [0.1.0-alpha.9] — 2026-11-01
 

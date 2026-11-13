@@ -615,7 +615,7 @@ def flow_svg(skin_name):
     p.append('<g filter="url(#soft)">')
     box(40, 528, 352, 108, "card", "edge", 18)
     p.append('</g>')
-    t(58, 552, "RECOVERY · freight.recovery_summary", 13, "accent", MONO, 700)
+    t(58, 552, "RECOVERY · freight_recovery_summary", 13, "accent", MONO, 700)
     t(376, 552, "R0", 11.5, "faint", MONO, anchor="end")
     stats = [(58, "over", "+100", "over"), (176, "under", "−827", "under"),
              (304, "net", "−727", "accent")]

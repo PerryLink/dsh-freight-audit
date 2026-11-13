@@ -35,7 +35,7 @@ dsh plugin --profile <profile> add dsh-freight-audit
 
 ## What it is
 
-A local pipeline for freight reconciliation: `freight.ratecard` stores one carrier/version ratecard in the local storage domain (base price, per-kg price, fuel percentage, effective window), `freight.audit` reads a CSV batch of bills and computes expected cost per shipment as `base_cents + per_kg_cents × weight_kg` plus `fuel_pct`, records the variance in cents on each bill, `freight.recovery_summary` aggregates overcharge/undercharge/net, and `freight.dispute` and `freight.export` write the dispute CSV and xlsx workpaper. Everything runs on your machine — no network, no model call, no upload; inputs are read by the session and passed to the tools as arguments, and the original files are never touched.
+A local pipeline for freight reconciliation: `freight_ratecard` stores one carrier/version ratecard in the local storage domain (base price, per-kg price, fuel percentage, effective window), `freight_audit` reads a CSV batch of bills and computes expected cost per shipment as `base_cents + per_kg_cents × weight_kg` plus `fuel_pct`, records the variance in cents on each bill, `freight_recovery_summary` aggregates overcharge/undercharge/net, and `freight_dispute` and `freight_export` write the dispute CSV and xlsx workpaper. Everything runs on your machine — no network, no model call, no upload; inputs are read by the session and passed to the tools as arguments, and the original files are never touched.
 
 - **Good fit**: monthly freight bills of tens to thousands of shipments (CSV); checking the variance first, then deciding how much to recover from the carrier.
 - **Not a fit**: manual records without weight or amount; direct TMS / carrier-portal integration (this package connects to no external system); replacing a formal claim or legal process.
@@ -97,29 +97,29 @@ Every PerryLink plugin is listed in the built-in DSH Desktop market: **Market �
 
 ## Core capabilities
 
-- **Versioned ratecards** — `freight.ratecard` with `set` stores a ratecard and `list` reads them all; two versions of the same carrier whose effective windows overlap are rejected loudly (`E_FREIGHT_RATE_OVERLAP`), and a missing `effective_to` means the version stays open-ended.
-- **Per-shipment audit and variance** — `freight.audit` parses the bill CSV, computes expected cost and variance per shipment (in cents), writes the per-shipment result into the local storage domain, and returns the list of outlier shipment ids.
-- **Recovery summary** — `freight.recovery_summary` aggregates overcharge, undercharge, and net for a carrier/version; read-only, it never overwrites stored bills.
-- **Dispute export** — `freight.dispute` selects only non-zero variances and exports a dispute-review CSV; text fields are formula-injection-neutralized, the path goes through the safe-path guard, and nothing is submitted to the carrier.
-- **Workpaper export** — `freight.export` writes per-shipment `billed/expected/variance` to a single xlsx sheet and returns the path and row count.
-- **Zone list-rate lookup** — `freight.zone_lookup` reads a public zone/rate CSV and returns the published rate for one zone; read-only, never folded into the audit math.
-- **Ratecard and accessorial hygiene** — `freight.ratecard_validate` checks money fields, fuel share, effective window, and version overlap; `freight.accessorial_check` checks accessorial type, integer amount, duplicates, agreed-list membership, and a total cap.
+- **Versioned ratecards** — `freight_ratecard` with `set` stores a ratecard and `list` reads them all; two versions of the same carrier whose effective windows overlap are rejected loudly (`E_FREIGHT_RATE_OVERLAP`), and a missing `effective_to` means the version stays open-ended.
+- **Per-shipment audit and variance** — `freight_audit` parses the bill CSV, computes expected cost and variance per shipment (in cents), writes the per-shipment result into the local storage domain, and returns the list of outlier shipment ids.
+- **Recovery summary** — `freight_recovery_summary` aggregates overcharge, undercharge, and net for a carrier/version; read-only, it never overwrites stored bills.
+- **Dispute export** — `freight_dispute` selects only non-zero variances and exports a dispute-review CSV; text fields are formula-injection-neutralized, the path goes through the safe-path guard, and nothing is submitted to the carrier.
+- **Workpaper export** — `freight_export` writes per-shipment `billed/expected/variance` to a single xlsx sheet and returns the path and row count.
+- **Zone list-rate lookup** — `freight_zone_lookup` reads a public zone/rate CSV and returns the published rate for one zone; read-only, never folded into the audit math.
+- **Ratecard and accessorial hygiene** — `freight_ratecard_validate` checks money fields, fuel share, effective window, and version overlap; `freight_accessorial_check` checks accessorial type, integer amount, duplicates, agreed-list membership, and a total cap.
 - **Purely local** — no HTTP / DNS / WebSocket calls in the source; no TMS or carrier-system connections, nothing uploaded.
 
 ### Tool surface
 
-Tool names are a stable API. Tools that write local files are marked **R1 (local write)**, read-only tools **R0**. `freight.audit` writes per-shipment results into the local storage domain, so it is marked R1 as well.
+Tool names are a stable API. Tools that write local files are marked **R1 (local write)**, read-only tools **R0**. `freight_audit` writes per-shipment results into the local storage domain, so it is marked R1 as well.
 
 | Tool | Purpose | Risk |
 |---|---|---|
-| `freight.ratecard` | Register/version a freight ratecard; `set` writes, `list` is read-only | R1 local write (`set`) |
-| `freight.audit` | Audit carrier bills against the ratecard; write expected/variance per shipment | R1 local write |
-| `freight.zone_lookup` | Look up a public zone/rate table | R0 read-only |
-| `freight.recovery_summary` | Summarize over/under/net recovery | R0 read-only |
-| `freight.dispute` | Export a variance CSV for dispute review | R1 local write |
-| `freight.export` | Export the audit xlsx workpaper | R1 local write |
-| `freight.ratecard_validate` | Ratecard hygiene: money fields, fuel share, effective window, version overlap | R0 read-only |
-| `freight.accessorial_check` | Accessorial validation: type, amount, duplicates, agreed list, total cap | R0 read-only |
+| `freight_ratecard` | Register/version a freight ratecard; `set` writes, `list` is read-only | R1 local write (`set`) |
+| `freight_audit` | Audit carrier bills against the ratecard; write expected/variance per shipment | R1 local write |
+| `freight_zone_lookup` | Look up a public zone/rate table | R0 read-only |
+| `freight_recovery_summary` | Summarize over/under/net recovery | R0 read-only |
+| `freight_dispute` | Export a variance CSV for dispute review | R1 local write |
+| `freight_export` | Export the audit xlsx workpaper | R1 local write |
+| `freight_ratecard_validate` | Ratecard hygiene: money fields, fuel share, effective window, version overlap | R0 read-only |
+| `freight_accessorial_check` | Accessorial validation: type, amount, duplicates, agreed list, total cap | R0 read-only |
 
 ### Input and output
 
@@ -169,7 +169,7 @@ Public-fixture acceptance: re-run `node scripts/acceptance.mjs`; details in `ACC
 
 ## Configuration
 
-This plugin has no Schemastery `Config` keys — `cordis.patch.yml` only `insert`s one row (see "Three-step setup"), so there is no plugin-level key to override. Ratecard fields are passed when calling `freight.ratecard`:
+This plugin has no Schemastery `Config` keys — `cordis.patch.yml` only `insert`s one row (see "Three-step setup"), so there is no plugin-level key to override. Ratecard fields are passed when calling `freight_ratecard`:
 
 | Field | Type | Meaning |
 |---|---|---|
@@ -193,7 +193,7 @@ The storage location can be overridden with the `DSH_FREIGHT_HOME` environment v
 <details>
 <summary>Full values: accessorial types and error codes</summary>
 
-`freight.accessorial_check` understands 12 accessorial types: `fuel`, `detention`, `liftgate`, `residential`, `inside_delivery`, `appointment`, `oversize`, `hazmat`, `waiting_time`, `reweigh`, `redelivery`, `storage`.
+`freight_accessorial_check` understands 12 accessorial types: `fuel`, `detention`, `liftgate`, `residential`, `inside_delivery`, `appointment`, `oversize`, `hazmat`, `waiting_time`, `reweigh`, `redelivery`, `storage`.
 
 Errors follow one format — a plain one-line message, an `E_XXX` code, and the next step. Error codes include: `E_FREIGHT_CSV_INVALID`, `E_FREIGHT_RATE_MISSING`, `E_FREIGHT_RATE_OVERLAP`, `E_FREIGHT_EXPORT_FAILED`, `E_FREIGHT_PATH_INVALID`, `E_FREIGHT_PATH_NOT_ALLOWED`. The validator and accessorial tools also return `E_FREIGHT_RATE_INVALID` and `E_FREIGHT_ACCESSORIAL_*` issue codes. Symptom/cause/action per code: [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 
@@ -296,13 +296,13 @@ Each checker is a separate package with its own rule pack and version; install o
 
 ```sh
 pnpm install --frozen-lockfile                            # node >=24.9 <25
-pnpm build && pnpm lint && pnpm typecheck && pnpm test    # tsc build + lint + 28 node --test cases
+pnpm build && pnpm lint && pnpm typecheck && pnpm test    # tsc build + lint + 29 node --test cases
 pnpm gate:sku12                                           # acceptance gate (ACCEPTANCE.csv)
 node scripts/acceptance.mjs                               # re-run the public/synthetic acceptance
 node samples/quickstart/run.mjs --check                   # synthetic sample, should print quickstart ok
 ```
 
-Current version `0.1.1` (matches `package.json`). Tests: `node --test test/*.test.mjs` (9 test files, 28 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow for the 1440×576 bilingual light/dark hero webp, hand-written SVG for the 1100×660 light/dark structure pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
+Current version `0.2.0` (matches `package.json`). Tests: `node --test test/*.test.mjs` (10 test files, 29 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow for the 1440×576 bilingual light/dark hero webp, hand-written SVG for the 1100×660 light/dark structure pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 
@@ -310,7 +310,7 @@ Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`
 
 This project is part of the DeepSeek Harness plugin family from [PerryLink](https://github.com/PerryLink) (all Apache-2.0). If it is useful, **a star helps the next person find it** — nothing is gated behind it.
 
-- [@PerryLink](https://github.com/PerryLink) — creator and maintainer: the ratecard-versioning and per-shipment audit engine, the eight `freight.*` tools, the quickstart sample and acceptance suite, and the five-language docs.
+- [@PerryLink](https://github.com/PerryLink) — creator and maintainer: the ratecard-versioning and per-shipment audit engine, the eight `freight_*` tools, the quickstart sample and acceptance suite, and the five-language docs.
 
 ## License
 

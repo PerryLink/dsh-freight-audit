@@ -40,14 +40,14 @@ async function run() {
     const tools = Object.fromEntries(createTools({ rates: new Table(), bills: new Table(), baseDir }).map((tool) => [tool.name, tool]))
     const call = { callId: 'quickstart' }
 
-    await tools['freight.ratecard'].execute({ action: 'set', ...card }, call)
-    const audit = await tools['freight.audit'].execute({ carrier: card.carrier, version: card.version, bills_csv: billsCsv }, call)
-    const recovery = await tools['freight.recovery_summary'].execute({ carrier: card.carrier, version: card.version }, call)
-    const workpaper = await tools['freight.export'].execute({ carrier: card.carrier, version: card.version }, call)
-    const dispute = await tools['freight.dispute'].execute({ carrier: card.carrier, version: card.version }, call)
-    const zone = await tools['freight.zone_lookup'].execute({ zone_csv: zonesCsv, zone: 3 }, call)
-    const ratecard = await tools['freight.ratecard_validate'].execute({ cards }, call)
-    const accessorial = await tools['freight.accessorial_check'].execute(accessorials, call)
+    await tools['freight_ratecard'].execute({ action: 'set', ...card }, call)
+    const audit = await tools['freight_audit'].execute({ carrier: card.carrier, version: card.version, bills_csv: billsCsv }, call)
+    const recovery = await tools['freight_recovery_summary'].execute({ carrier: card.carrier, version: card.version }, call)
+    const workpaper = await tools['freight_export'].execute({ carrier: card.carrier, version: card.version }, call)
+    const dispute = await tools['freight_dispute'].execute({ carrier: card.carrier, version: card.version }, call)
+    const zone = await tools['freight_zone_lookup'].execute({ zone_csv: zonesCsv, zone: 3 }, call)
+    const ratecard = await tools['freight_ratecard_validate'].execute({ cards }, call)
+    const accessorial = await tools['freight_accessorial_check'].execute(accessorials, call)
 
     return {
       sample: 'samples/quickstart/input/bills.csv',

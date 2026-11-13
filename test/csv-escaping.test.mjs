@@ -37,9 +37,9 @@ test('the dispute tool escapes a formula reference taken from bill text', async 
   try {
     const by = Object.fromEntries(createTools({ rates: new T(), bills: new T(), baseDir: dir }).map((tool) => [tool.name, tool]))
     const exec = { callId: 'csv' }
-    await by['freight.ratecard'].execute({ action: 'set', carrier: 'C', version: 'v1', base_cents: 1000, per_kg_cents: 100, fuel_pct: 10, effective_from: '2026-01-01' }, exec)
-    await by['freight.audit'].execute({ carrier: 'C', version: 'v1', bills_csv: 'shipment_id,weight_kg,billed\n=SUM(A1:A2),10,23.00' }, exec)
-    const result = await by['freight.dispute'].execute({ carrier: 'C', version: 'v1' }, exec)
+    await by['freight_ratecard'].execute({ action: 'set', carrier: 'C', version: 'v1', base_cents: 1000, per_kg_cents: 100, fuel_pct: 10, effective_from: '2026-01-01' }, exec)
+    await by['freight_audit'].execute({ carrier: 'C', version: 'v1', bills_csv: 'shipment_id,weight_kg,billed\n=SUM(A1:A2),10,23.00' }, exec)
+    const result = await by['freight_dispute'].execute({ carrier: 'C', version: 'v1' }, exec)
     const csv = await readFile(result.path, 'utf8')
     assert.equal(csv, `${DISPUTE_CSV_HEADER}\n'=SUM(A1:A2),10,2300,2200,100\n`)
     assert.ok(!/(^|\n)=/.test(csv), 'no CSV field may start with a raw =')

@@ -2,7 +2,7 @@ export type FreightErrorCode='E_FREIGHT_CSV_INVALID'|'E_FREIGHT_RATE_MISSING'|'E
 /** User-facing wording: one plain sentence, the code, then exactly one next action. */
 const FREIGHT_HUMAN:Record<FreightErrorCode,{text:string;next:string}>={
   E_FREIGHT_CSV_INVALID:{text:'这张运费账单读不出来',next:'确保表头有 shipment_id,weight_kg,billed 三列，金额写成 23.00 这样的两位小数'},
-  E_FREIGHT_RATE_MISSING:{text:'找不到这张费率卡，或费率卡字段不全',next:'先用 freight.ratecard 的 set 动作建好 carrier 和 version，再跑审计'},
+  E_FREIGHT_RATE_MISSING:{text:'找不到这张费率卡，或费率卡字段不全',next:'先用 freight_ratecard 的 set 动作建好 carrier 和 version，再跑审计'},
   E_FREIGHT_RATE_OVERLAP:{text:'这张费率卡和同承运商的另一个版本生效期重叠',next:'改 effective_from/effective_to，让同一承运商的版本区间不重叠'},
   E_FREIGHT_EXPORT_FAILED:{text:'导出文件写不进去',next:'确认 $DSH_HOME 可写、磁盘还有空间，再重试一次'},
   E_FREIGHT_PATH_INVALID:{text:'导出文件名不合法',next:'承运商和版本号只用字母、数字、点、下划线和连字符'},

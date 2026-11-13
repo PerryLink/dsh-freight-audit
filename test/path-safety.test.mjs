@@ -73,9 +73,9 @@ test('the export tool writes the xlsx inside the exports directory', async () =>
     const baseDir = path.join(dir, 'store')
     const by = Object.fromEntries(createTools({ rates: new T(), bills: new T(), baseDir }).map((tool) => [tool.name, tool]))
     const exec = { callId: 'path' }
-    await by['freight.ratecard'].execute({ action: 'set', carrier: 'C', version: 'v1', base_cents: 1000, per_kg_cents: 100, fuel_pct: 10, effective_from: '2026-01-01' }, exec)
-    await by['freight.audit'].execute({ carrier: 'C', version: 'v1', bills_csv: 'shipment_id,weight_kg,billed\nS1,10,23.00\nS2,10,22.00' }, exec)
-    const result = await by['freight.export'].execute({ carrier: 'C', version: 'v1' }, exec)
+    await by['freight_ratecard'].execute({ action: 'set', carrier: 'C', version: 'v1', base_cents: 1000, per_kg_cents: 100, fuel_pct: 10, effective_from: '2026-01-01' }, exec)
+    await by['freight_audit'].execute({ carrier: 'C', version: 'v1', bills_csv: 'shipment_id,weight_kg,billed\nS1,10,23.00\nS2,10,22.00' }, exec)
+    const result = await by['freight_export'].execute({ carrier: 'C', version: 'v1' }, exec)
     assert.equal(result.path, path.join(await realpath(path.join(baseDir, 'exports')), 'freight-C-v1.xlsx'))
     assert.equal(result.rows, 2)
     assert.ok((await stat(result.path)).isFile())
@@ -89,10 +89,10 @@ test('the export and dispute tools refuse a traversal carrier', async () => {
     const by = Object.fromEntries(createTools({ rates: new T(), bills: new T(), baseDir }).map((tool) => [tool.name, tool]))
     const exec = { callId: 'path' }
     const carrier = 'x/../../evil'
-    await by['freight.ratecard'].execute({ action: 'set', carrier, version: 'v1', base_cents: 1000, per_kg_cents: 100, fuel_pct: 10, effective_from: '2026-01-01' }, exec)
-    await by['freight.audit'].execute({ carrier, version: 'v1', bills_csv: 'shipment_id,weight_kg,billed\nS1,10,23.00' }, exec)
-    await assert.rejects(() => by['freight.export'].execute({ carrier, version: 'v1' }, exec), code('E_FREIGHT_PATH_INVALID'))
-    await assert.rejects(() => by['freight.dispute'].execute({ carrier, version: 'v1' }, exec), code('E_FREIGHT_PATH_INVALID'))
+    await by['freight_ratecard'].execute({ action: 'set', carrier, version: 'v1', base_cents: 1000, per_kg_cents: 100, fuel_pct: 10, effective_from: '2026-01-01' }, exec)
+    await by['freight_audit'].execute({ carrier, version: 'v1', bills_csv: 'shipment_id,weight_kg,billed\nS1,10,23.00' }, exec)
+    await assert.rejects(() => by['freight_export'].execute({ carrier, version: 'v1' }, exec), code('E_FREIGHT_PATH_INVALID'))
+    await assert.rejects(() => by['freight_dispute'].execute({ carrier, version: 'v1' }, exec), code('E_FREIGHT_PATH_INVALID'))
     await assert.rejects(() => access(path.join(baseDir, 'evil-v1.xlsx')))
     await assert.rejects(() => access(path.join(baseDir, 'evil-v1.csv')))
   } finally { await rm(dir, { recursive: true, force: true }) }

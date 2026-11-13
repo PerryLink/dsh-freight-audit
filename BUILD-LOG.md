@@ -6,11 +6,11 @@
 
 ### alpha.1 — dispute CSV
 
-- Added `freight.dispute`; tests 3/3.
+- Added `freight_dispute`; tests 3/3.
 
 ### alpha.2 — zone lookup
 
-- Added `freight.zone_lookup`; MIT UPS sample; gate 5 rows.
+- Added `freight_zone_lookup`; MIT UPS sample; gate 5 rows.
 
 ### alpha.3 — recovery summary
 

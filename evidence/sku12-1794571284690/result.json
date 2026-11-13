@@ -1,0 +1,66 @@
+{
+  "run_id": "sku12-1794571284690",
+  "scope": "SKU-12-S1",
+  "status": "partial",
+  "counted": false,
+  "note": "synthetic freight bills; user-approved public/synthetic; 0 real carriers",
+  "metrics": [
+    {
+      "i": "SKU-12-A01",
+      "m": "账单解析（30）",
+      "t": "30/30",
+      "a": 30,
+      "p": true
+    },
+    {
+      "i": "SKU-12-A02",
+      "m": "异常票",
+      "t": "5",
+      "a": 5,
+      "p": true
+    },
+    {
+      "i": "SKU-12-A03",
+      "m": "差额合计分",
+      "t": "500",
+      "a": 500,
+      "p": true
+    },
+    {
+      "i": "SKU-12-A04",
+      "m": "底稿 sheet",
+      "t": "1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "SKU-12-A05",
+      "m": "公开 zone rate",
+      "t": "2327",
+      "a": 2327,
+      "p": true
+    },
+    {
+      "i": "SKU-12-A06",
+      "m": "追回汇总净额",
+      "t": "100",
+      "a": 100,
+      "p": true
+    },
+    {
+      "i": "SKU-12-A07",
+      "m": "费率卡重叠检测",
+      "t": "1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "SKU-12-A08",
+      "m": "附加费校验",
+      "t": "1",
+      "a": 1,
+      "p": true
+    }
+  ],
+  "pass": true
+}

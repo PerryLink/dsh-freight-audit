@@ -7,13 +7,13 @@
 
 - **症状**：`这张运费账单读不出来（E_FREIGHT_CSV_INVALID）｜下一步：确保表头有 shipment_id,weight_kg,billed 三列，金额写成 23.00 这样的两位小数`
 - **原因**：表头被换成中文、金额带 `¥` 或三位小数、重量为空 / 为 0。
-- **动作**：把表头改成三列原名；金额改成两位小数（`23.00`）；重量填正数，再跑 `freight.audit`。
+- **动作**：把表头改成三列原名；金额改成两位小数（`23.00`）；重量填正数，再跑 `freight_audit`。
 
 ## 2. 找不到费率卡或字段不全（E_FREIGHT_RATE_MISSING）
 
-- **症状**：`找不到这张费率卡，或费率卡字段不全（E_FREIGHT_RATE_MISSING）｜下一步：先用 freight.ratecard 的 set 动作建好 carrier 和 version，再跑审计`
+- **症状**：`找不到这张费率卡，或费率卡字段不全（E_FREIGHT_RATE_MISSING）｜下一步：先用 freight_ratecard 的 set 动作建好 carrier 和 version，再跑审计`
 - **原因**：审计时给的 `carrier/version` 和已建的卡不一致，或建卡时漏了 base/per_kg/fuel/effective_from。
-- **动作**：先 `freight.ratecard` 用 `action:"list"` 看已有哪些卡；再按返回的 `carrier|version` 原样传给 `freight.audit`。
+- **动作**：先 `freight_ratecard` 用 `action:"list"` 看已有哪些卡；再按返回的 `carrier|version` 原样传给 `freight_audit`。
 
 ## 3. 费率卡版本生效期重叠（E_FREIGHT_RATE_OVERLAP）
 
