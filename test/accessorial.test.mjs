@@ -8,7 +8,7 @@ const tools = Object.fromEntries(createTools({ rates: new T(), bills: new T(), d
 const exec = { callId: 'acc' }
 
 test('a clean accessorial list totals correctly', async () => {
-  const r = await tools['freight.accessorial_check'].execute({ items: [{ type: 'fuel', amount_cents: 1200 }, { type: 'liftgate', amount_cents: 500 }] }, exec)
+  const r = await tools['freight_accessorial_check'].execute({ items: [{ type: 'fuel', amount_cents: 1200 }, { type: 'liftgate', amount_cents: 500 }] }, exec)
   assert.equal(r.items, 2)
   assert.equal(r.total_cents, 1700)
   assert.deepEqual(r.issues, [])
@@ -16,7 +16,7 @@ test('a clean accessorial list totals correctly', async () => {
 })
 
 test('unknown, duplicate and negative charges are reported', async () => {
-  const r = await tools['freight.accessorial_check'].execute({ items: [
+  const r = await tools['freight_accessorial_check'].execute({ items: [
     { type: 'teleport', amount_cents: 100 },
     { type: 'detention', amount_cents: 100 },
     { type: 'detention', amount_cents: 200 },
@@ -28,7 +28,7 @@ test('unknown, duplicate and negative charges are reported', async () => {
 })
 
 test('the agreed list and the cap are enforced', async () => {
-  const r = await tools['freight.accessorial_check'].execute({ items: [{ type: 'detention', amount_cents: 900 }, { type: 'liftgate', amount_cents: 300 }], allowed: ['detention'], cap_cents: 1000 }, exec)
+  const r = await tools['freight_accessorial_check'].execute({ items: [{ type: 'detention', amount_cents: 900 }, { type: 'liftgate', amount_cents: 300 }], allowed: ['detention'], cap_cents: 1000 }, exec)
   assert.ok(r.issues.some((i) => i.code === 'E_FREIGHT_ACCESSORIAL_NOT_ALLOWED'))
   assert.ok(r.issues.some((i) => i.code === 'E_FREIGHT_ACCESSORIAL_CAP'))
 })

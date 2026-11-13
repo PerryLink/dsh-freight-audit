@@ -35,7 +35,7 @@ dsh plugin --profile <profile> add dsh-freight-audit
 
 ## Qué es
 
-Una canalización local para la conciliación de fletes: `freight.ratecard` guarda una tarifa de transportista/versión en el dominio de almacenamiento local (precio base, precio por kg, porcentaje de combustible, ventana de vigencia), `freight.audit` lee un lote CSV de facturas y calcula el coste esperado por envío como `base_cents + per_kg_cents × weight_kg` más `fuel_pct`, registra la varianza en céntimos en cada factura, `freight.recovery_summary` agrega cobro excesivo/cobro insuficiente/neto, y `freight.dispute` y `freight.export` escriben el CSV de disputa y la hoja xlsx. Todo se ejecuta en tu máquina — sin red, sin llamadas a un modelo, sin subidas; las entradas las lee la sesión y se pasan a las herramientas como argumentos, y los archivos originales no se tocan.
+Una canalización local para la conciliación de fletes: `freight_ratecard` guarda una tarifa de transportista/versión en el dominio de almacenamiento local (precio base, precio por kg, porcentaje de combustible, ventana de vigencia), `freight_audit` lee un lote CSV de facturas y calcula el coste esperado por envío como `base_cents + per_kg_cents × weight_kg` más `fuel_pct`, registra la varianza en céntimos en cada factura, `freight_recovery_summary` agrega cobro excesivo/cobro insuficiente/neto, y `freight_dispute` y `freight_export` escriben el CSV de disputa y la hoja xlsx. Todo se ejecuta en tu máquina — sin red, sin llamadas a un modelo, sin subidas; las entradas las lee la sesión y se pasan a las herramientas como argumentos, y los archivos originales no se tocan.
 
 - **Adecuado para**: facturas mensuales de fletes de decenas a miles de envíos (CSV); revisar primero la varianza y luego decidir cuánto reclamar al transportista.
 - **No adecuado para**: registros manuales sin peso ni importe; integración directa con TMS / portales de transportistas (este paquete no se conecta a ningún sistema externo); sustituir una reclamación formal o un proceso legal.
@@ -97,29 +97,29 @@ Todos los plugins de PerryLink están en el mercado integrado de DSH Desktop: **
 
 ## Capacidades clave
 
-- **Tarifas versionadas** — `freight.ratecard` con `set` guarda una tarifa y `list` las lee todas; dos versiones del mismo transportista con ventanas de vigencia solapadas se rechazan en voz alta (`E_FREIGHT_RATE_OVERLAP`), y un `effective_to` ausente significa que la versión queda abierta.
-- **Auditoría y varianza por envío** — `freight.audit` analiza el CSV de facturas, calcula el coste esperado y la varianza por envío (en céntimos), escribe el resultado por envío en el dominio de almacenamiento local y devuelve la lista de envíos atípicos.
-- **Resumen de recuperación** — `freight.recovery_summary` agrega cobro excesivo, cobro insuficiente y neto para un transportista/versión; solo lectura, nunca sobrescribe las facturas guardadas.
-- **Exportación de disputa** — `freight.dispute` selecciona solo varianzas distintas de cero y exporta un CSV de revisión de disputa; los campos de texto se neutralizan contra inyección de fórmulas, la ruta pasa por la guardia safe-path y no se envía nada al transportista.
-- **Exportación de hoja de trabajo** — `freight.export` escribe `billed/expected/variance` por envío en una sola hoja xlsx y devuelve la ruta y el número de filas.
-- **Consulta de tarifa de zona** — `freight.zone_lookup` lee un CSV público de zona/tarifa y devuelve la tarifa publicada para una zona; solo lectura, nunca se suma al cálculo de auditoría.
-- **Higiene de tarifas y recargos** — `freight.ratecard_validate` comprueba campos monetarios, porcentaje de combustible, ventana de vigencia y solape de versiones; `freight.accessorial_check` comprueba tipo de recargo, importe entero, duplicados, pertenencia a la lista acordada y tope total.
+- **Tarifas versionadas** — `freight_ratecard` con `set` guarda una tarifa y `list` las lee todas; dos versiones del mismo transportista con ventanas de vigencia solapadas se rechazan en voz alta (`E_FREIGHT_RATE_OVERLAP`), y un `effective_to` ausente significa que la versión queda abierta.
+- **Auditoría y varianza por envío** — `freight_audit` analiza el CSV de facturas, calcula el coste esperado y la varianza por envío (en céntimos), escribe el resultado por envío en el dominio de almacenamiento local y devuelve la lista de envíos atípicos.
+- **Resumen de recuperación** — `freight_recovery_summary` agrega cobro excesivo, cobro insuficiente y neto para un transportista/versión; solo lectura, nunca sobrescribe las facturas guardadas.
+- **Exportación de disputa** — `freight_dispute` selecciona solo varianzas distintas de cero y exporta un CSV de revisión de disputa; los campos de texto se neutralizan contra inyección de fórmulas, la ruta pasa por la guardia safe-path y no se envía nada al transportista.
+- **Exportación de hoja de trabajo** — `freight_export` escribe `billed/expected/variance` por envío en una sola hoja xlsx y devuelve la ruta y el número de filas.
+- **Consulta de tarifa de zona** — `freight_zone_lookup` lee un CSV público de zona/tarifa y devuelve la tarifa publicada para una zona; solo lectura, nunca se suma al cálculo de auditoría.
+- **Higiene de tarifas y recargos** — `freight_ratecard_validate` comprueba campos monetarios, porcentaje de combustible, ventana de vigencia y solape de versiones; `freight_accessorial_check` comprueba tipo de recargo, importe entero, duplicados, pertenencia a la lista acordada y tope total.
 - **Puramente local** — sin llamadas HTTP / DNS / WebSocket en el código; sin conexiones a TMS ni a sistemas de transportistas, nada se sube.
 
 ### Superficie de herramientas
 
-Los nombres de las herramientas son una API estable. Las herramientas que escriben archivos locales se marcan **R1 (escritura local)** y las de solo lectura **R0**. `freight.audit` escribe los resultados por envío en el dominio de almacenamiento local, así que también se marca R1.
+Los nombres de las herramientas son una API estable. Las herramientas que escriben archivos locales se marcan **R1 (escritura local)** y las de solo lectura **R0**. `freight_audit` escribe los resultados por envío en el dominio de almacenamiento local, así que también se marca R1.
 
 | Herramienta | Propósito | Riesgo |
 |---|---|---|
-| `freight.ratecard` | Registrar/versionar una tarifa de flete; `set` escribe, `list` es de solo lectura | R1 escritura local (`set`) |
-| `freight.audit` | Auditar facturas del transportista contra la tarifa; escribir esperado/varianza por envío | R1 escritura local |
-| `freight.zone_lookup` | Consultar una tabla pública de zona/tarifa | R0 solo lectura |
-| `freight.recovery_summary` | Resumir cobro excesivo/insuficiente/neto | R0 solo lectura |
-| `freight.dispute` | Exportar un CSV de varianzas para revisión de disputa | R1 escritura local |
-| `freight.export` | Exportar la hoja xlsx de auditoría | R1 escritura local |
-| `freight.ratecard_validate` | Higiene de tarifas: campos monetarios, combustible, vigencia, solape | R0 solo lectura |
-| `freight.accessorial_check` | Validación de recargos: tipo, importe, duplicados, lista acordada, tope | R0 solo lectura |
+| `freight_ratecard` | Registrar/versionar una tarifa de flete; `set` escribe, `list` es de solo lectura | R1 escritura local (`set`) |
+| `freight_audit` | Auditar facturas del transportista contra la tarifa; escribir esperado/varianza por envío | R1 escritura local |
+| `freight_zone_lookup` | Consultar una tabla pública de zona/tarifa | R0 solo lectura |
+| `freight_recovery_summary` | Resumir cobro excesivo/insuficiente/neto | R0 solo lectura |
+| `freight_dispute` | Exportar un CSV de varianzas para revisión de disputa | R1 escritura local |
+| `freight_export` | Exportar la hoja xlsx de auditoría | R1 escritura local |
+| `freight_ratecard_validate` | Higiene de tarifas: campos monetarios, combustible, vigencia, solape | R0 solo lectura |
+| `freight_accessorial_check` | Validación de recargos: tipo, importe, duplicados, lista acordada, tope | R0 solo lectura |
 
 ### Entrada y salida
 
@@ -169,7 +169,7 @@ Aceptación con fixture pública: repite `node scripts/acceptance.mjs`; detalle 
 
 ## Configuración
 
-Este plugin no tiene claves `Config` de Schemastery — `cordis.patch.yml` solo `insert` una fila (ver «Instalación en tres pasos»), así que no hay ninguna clave de plugin que sobrescribir. Los campos de la tarifa se pasan al llamar a `freight.ratecard`:
+Este plugin no tiene claves `Config` de Schemastery — `cordis.patch.yml` solo `insert` una fila (ver «Instalación en tres pasos»), así que no hay ninguna clave de plugin que sobrescribir. Los campos de la tarifa se pasan al llamar a `freight_ratecard`:
 
 | Campo | Tipo | Significado |
 |---|---|---|
@@ -193,7 +193,7 @@ La ubicación de almacenamiento se puede sobrescribir con la variable de entorno
 <details>
 <summary>Valores completos: tipos de recargo y códigos de error</summary>
 
-`freight.accessorial_check` entiende 12 tipos de recargo: `fuel`, `detention`, `liftgate`, `residential`, `inside_delivery`, `appointment`, `oversize`, `hazmat`, `waiting_time`, `reweigh`, `redelivery`, `storage`.
+`freight_accessorial_check` entiende 12 tipos de recargo: `fuel`, `detention`, `liftgate`, `residential`, `inside_delivery`, `appointment`, `oversize`, `hazmat`, `waiting_time`, `reweigh`, `redelivery`, `storage`.
 
 Los errores siguen un formato único — mensaje llano, código `E_XXX` y siguiente paso. Los códigos incluyen: `E_FREIGHT_CSV_INVALID`, `E_FREIGHT_RATE_MISSING`, `E_FREIGHT_RATE_OVERLAP`, `E_FREIGHT_EXPORT_FAILED`, `E_FREIGHT_PATH_INVALID`, `E_FREIGHT_PATH_NOT_ALLOWED`. Las herramientas de validación y recargos también devuelven `E_FREIGHT_RATE_INVALID` y códigos de incidencia `E_FREIGHT_ACCESSORIAL_*`. Síntoma/causa/acción por código: [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 
@@ -296,13 +296,13 @@ Cada checker es un paquete independiente con su propio paquete de reglas y versi
 
 ```sh
 pnpm install --frozen-lockfile                            # node >=24.9 <25
-pnpm build && pnpm lint && pnpm typecheck && pnpm test    # build tsc + lint + 28 casos node --test
+pnpm build && pnpm lint && pnpm typecheck && pnpm test    # build tsc + lint + 29 casos node --test
 pnpm gate:sku12                                           # puerta de aceptación (ACCEPTANCE.csv)
 node scripts/acceptance.mjs                               # repetir la aceptación pública/sintética
 node samples/quickstart/run.mjs --check                   # muestra sintética; debe imprimir quickstart ok
 ```
 
-Versión actual `0.1.1` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` (9 archivos de prueba, 28 casos; `pnpm test` compila primero). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow para el hero bilingüe 1440×576 claro/oscuro y SVG escrito a mano para el par de estructura 1100×660 claro/oscuro compartido por los cinco idiomas) y se pueden repetir: `python scripts/gen-readme-assets.py`.
+Versión actual `0.2.0` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` (10 archivos de prueba, 29 casos; `pnpm test` compila primero). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow para el hero bilingüe 1440×576 claro/oscuro y SVG escrito a mano para el par de estructura 1100×660 claro/oscuro compartido por los cinco idiomas) y se pueden repetir: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 
@@ -310,7 +310,7 @@ Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`
 
 Este proyecto forma parte de la familia de plugins de DeepSeek Harness de [PerryLink](https://github.com/PerryLink) (todos Apache-2.0). Si te resulta útil, **una estrella ayuda a que la siguiente persona lo encuentre** — no hay nada bloqueado tras ella.
 
-- [@PerryLink](https://github.com/PerryLink) — creador y mantenedor: el motor de versionado de tarifas y auditoría por envío, las ocho herramientas `freight.*`, la muestra quickstart y la suite de aceptación, y la documentación en cinco idiomas.
+- [@PerryLink](https://github.com/PerryLink) — creador y mantenedor: el motor de versionado de tarifas y auditoría por envío, las ocho herramientas `freight_*`, la muestra quickstart y la suite de aceptación, y la documentación en cinco idiomas.
 
 ## Licencia
 

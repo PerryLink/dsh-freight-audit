@@ -55,8 +55,8 @@ test('apply() registers the tools against a minimal host', async () => {
     assert.equal(typeof tool.description, 'string')
     assert.ok(tool.description.length > 0)
     assert.equal(typeof tool.execute, 'function')
-    assert.ok(tool.name.startsWith('freight.'), `unexpected prefix: ${tool.name}`)
+    assert.ok(tool.name.startsWith('freight_'), `unexpected prefix: ${tool.name}`)
   }
-  for (const name of names) assert.ok(name.startsWith('freight.'), `unexpected prefix: ${name}`)
+  for (const name of names) assert.ok(name.startsWith('freight_'), `unexpected prefix: ${name}`)
   assert.equal(new Set(names).size, names.length)
 })
