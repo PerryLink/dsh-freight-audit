@@ -149,6 +149,11 @@ node samples/quickstart/run.mjs --check  # 与金标比对，结尾 quickstart o
 
 *截图是 `node samples/quickstart/run.mjs --check` 的真实终端输出；命令与输出哈希见 `screenshots.json`（2026-11-02 真实运行），金标为 `samples/quickstart/expected/result.json`。*
 
+![dsh-freight-audit quickstart 真实运行输出](docs/assets/dsh-freight-audit-demo.gif)
+
+*同一段真实运行的动图版本。*
+
+
 公开 fixture 验收：重跑 `node scripts/acceptance.mjs`，明细见 `ACCEPTANCE.csv`：
 
 | req_id | metric | threshold | actual | pass | source | counted |

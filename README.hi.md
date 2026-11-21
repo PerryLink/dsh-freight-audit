@@ -151,6 +151,11 @@ node samples/quickstart/run.mjs --check  # गोल्ड से तुलन�
 
 *स्क्रीनशॉट `node samples/quickstart/run.mjs --check` का वास्तविक टर्मिनल आउटपुट है; कमांड और आउटपुट हैश `screenshots.json` में दर्ज हैं (2026-11-02 का वास्तविक रन), और गोल्ड फ़ाइल `samples/quickstart/expected/result.json` है।*
 
+![dsh-freight-audit quickstart का वास्तविक रन आउटपुट](docs/assets/dsh-freight-audit-demo.gif)
+
+*उसी असली रन का एनिमेटेड संस्करण।*
+
+
 सार्वजनिक fixture स्वीकृति: `node scripts/acceptance.mjs` दोबारा चलाएँ; विवरण `ACCEPTANCE.csv` में:
 
 | req_id | metric | threshold | actual | pass | source | counted |

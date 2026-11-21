@@ -151,6 +151,11 @@ node samples/quickstart/run.mjs --check  # compara con el oro; termina con quick
 
 *La captura es la salida real de terminal de `node samples/quickstart/run.mjs --check`; el comando y los hashes de salida están en `screenshots.json` (ejecución real del 2026-11-02), y el archivo de oro es `samples/quickstart/expected/result.json`.*
 
+![Salida real de la ejecución del quickstart de dsh-freight-audit](docs/assets/dsh-freight-audit-demo.gif)
+
+*La versión animada de la misma ejecución.*
+
+
 Aceptación con fixture pública: repite `node scripts/acceptance.mjs`; detalle en `ACCEPTANCE.csv`:
 
 | req_id | metric | threshold | actual | pass | source | counted |
