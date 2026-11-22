@@ -11,6 +11,8 @@
 
 A purely local freight-audit plugin for DeepSeek Harness: versioned ratecards, expected cost from base + per-kg × weight plus a fuel percentage, cent-level variance, and an xlsx workpaper with a dispute CSV — no network, no model call, no upload.
 
+Last verified on DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Install](#three-step-setup) · [Configuration](#configuration) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -154,7 +156,6 @@ node samples/quickstart/run.mjs --check  # diff against the gold file, ends with
 ![Real dsh-freight-audit quickstart run output](docs/assets/dsh-freight-audit-demo.gif)
 
 *The animated version of the same run.*
-
 
 Public-fixture acceptance: re-run `node scripts/acceptance.mjs`; details in `ACCEPTANCE.csv`:
 
@@ -307,7 +308,7 @@ node scripts/acceptance.mjs                               # re-run the public/sy
 node samples/quickstart/run.mjs --check                   # synthetic sample, should print quickstart ok
 ```
 
-Current version `0.2.0` (matches `package.json`). Tests: `node --test test/*.test.mjs` (10 test files, 29 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow for the 1440×576 bilingual light/dark hero webp, hand-written SVG for the 1100×660 light/dark structure pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
+Current version `0.2.1` (matches `package.json`). Tests: `node --test test/*.test.mjs` (10 test files, 29 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow for the 1440×576 bilingual light/dark hero webp, hand-written SVG for the 1100×660 light/dark structure pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 

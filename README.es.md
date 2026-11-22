@@ -11,6 +11,8 @@
 
 Un plugin de auditoría de fletes puramente local para DeepSeek Harness: tarifas versionadas, coste esperado a partir de base + por kg × peso más un porcentaje de combustible, varianza al céntimo y una hoja de trabajo xlsx con un CSV de disputa — sin red, sin llamadas a un modelo, sin subidas.
 
+Última verificación: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalar](#instalación-en-tres-pasos) · [Configuración](#configuración) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -154,7 +156,6 @@ node samples/quickstart/run.mjs --check  # compara con el oro; termina con quick
 ![Salida real de la ejecución del quickstart de dsh-freight-audit](docs/assets/dsh-freight-audit-demo.gif)
 
 *La versión animada de la misma ejecución.*
-
 
 Aceptación con fixture pública: repite `node scripts/acceptance.mjs`; detalle en `ACCEPTANCE.csv`:
 
@@ -307,7 +308,7 @@ node scripts/acceptance.mjs                               # repetir la aceptaci�
 node samples/quickstart/run.mjs --check                   # muestra sintética; debe imprimir quickstart ok
 ```
 
-Versión actual `0.2.0` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` (10 archivos de prueba, 29 casos; `pnpm test` compila primero). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow para el hero bilingüe 1440×576 claro/oscuro y SVG escrito a mano para el par de estructura 1100×660 claro/oscuro compartido por los cinco idiomas) y se pueden repetir: `python scripts/gen-readme-assets.py`.
+Versión actual `0.2.1` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` (10 archivos de prueba, 29 casos; `pnpm test` compila primero). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow para el hero bilingüe 1440×576 claro/oscuro y SVG escrito a mano para el par de estructura 1100×660 claro/oscuro compartido por los cinco idiomas) y se pueden repetir: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 

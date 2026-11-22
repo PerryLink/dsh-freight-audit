@@ -11,6 +11,8 @@
 
 Um plugin de auditoria de frete puramente local para DeepSeek Harness: tarifas versionadas, custo esperado a partir de base + por kg × peso mais um percentual de combustível, variação em centavos e uma planilha xlsx com um CSV de disputa — sem rede, sem chamada a modelo, sem upload.
 
+Última verificação: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalar](#instalação-em-três-passos) · [Configuração](#configuração) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -154,7 +156,6 @@ node samples/quickstart/run.mjs --check  # compara com o ouro; termina com quick
 ![Saída real da execução do quickstart do dsh-freight-audit](docs/assets/dsh-freight-audit-demo.gif)
 
 *A versão animada da mesma execução.*
-
 
 Aceitação com fixture pública: repita `node scripts/acceptance.mjs`; detalhe em `ACCEPTANCE.csv`:
 
@@ -307,7 +308,7 @@ node scripts/acceptance.mjs                               # repetir a aceitaçã
 node samples/quickstart/run.mjs --check                   # amostra sintética; deve imprimir quickstart ok
 ```
 
-Versão atual `0.2.0` (confere com `package.json`). Testes: `node --test test/*.test.mjs` (10 arquivos de teste, 29 casos; `pnpm test` compila primeiro). As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow para o hero bilíngue 1440×576 claro/escuro e SVG escrito à mão para o par de estrutura 1100×660 claro/escuro compartilhado pelos cinco idiomas) e podem ser repetidas: `python scripts/gen-readme-assets.py`.
+Versão atual `0.2.1` (confere com `package.json`). Testes: `node --test test/*.test.mjs` (10 arquivos de teste, 29 casos; `pnpm test` compila primeiro). As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow para o hero bilíngue 1440×576 claro/escuro e SVG escrito à mão para o par de estrutura 1100×660 claro/escuro compartilhado pelos cinco idiomas) e podem ser repetidas: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 

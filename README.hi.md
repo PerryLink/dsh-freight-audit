@@ -11,6 +11,8 @@
 
 DeepSeek Harness के लिए पूरी तरह स्थानीय फ़्रेट ऑडिट प्लगइन: वर्ज़न वाले रेटकार्ड, base + per-kg × वज़न पर फ़्यूल प्रतिशत जोड़कर अपेक्षित लागत, सेंट-स्तर का अंतर, और विवाद CSV के साथ xlsx वर्कपेपर — न नेटवर्क, न मॉडल कॉल, न अपलोड।
 
+अंतिम सत्यापन: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [इंस्टॉल](#तीन-चरणों-में-शुरुआत) · [कॉन्फ़िगरेशन](#कॉन्फ़िगरेशन) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -154,7 +156,6 @@ node samples/quickstart/run.mjs --check  # गोल्ड से तुलन�
 ![dsh-freight-audit quickstart का वास्तविक रन आउटपुट](docs/assets/dsh-freight-audit-demo.gif)
 
 *उसी असली रन का एनिमेटेड संस्करण।*
-
 
 सार्वजनिक fixture स्वीकृति: `node scripts/acceptance.mjs` दोबारा चलाएँ; विवरण `ACCEPTANCE.csv` में:
 
@@ -307,7 +308,7 @@ node scripts/acceptance.mjs                               # सार्वज�
 node samples/quickstart/run.mjs --check                   # सिंथेटिक नमूना; quickstart ok छापना चाहिए
 ```
 
-मौजूदा वर्ज़न `0.2.0` (`package.json` से मेल)। परीक्षण: `node --test test/*.test.mjs` (10 परीक्षण फ़ाइलें, 29 केस; `pnpm test` पहले बिल्ड करता है)। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से प्रोग्रामेटिक रूप से बनती हैं (Python/Pillow से 1440×576 द्विभाषी हल्का/गहरा hero webp और हाथ से लिखा SVG 1100×660 हल्का/गहरा संरचना जोड़ी, पाँचों भाषाओं में साझा) और दोबारा चलाई जा सकती हैं: `python scripts/gen-readme-assets.py`.
+मौजूदा वर्ज़न `0.2.1` (`package.json` से मेल)। परीक्षण: `node --test test/*.test.mjs` (10 परीक्षण फ़ाइलें, 29 केस; `pnpm test` पहले बिल्ड करता है)। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से प्रोग्रामेटिक रूप से बनती हैं (Python/Pillow से 1440×576 द्विभाषी हल्का/गहरा hero webp और हाथ से लिखा SVG 1100×660 हल्का/गहरा संरचना जोड़ी, पाँचों भाषाओं में साझा) और दोबारा चलाई जा सकती हैं: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 
