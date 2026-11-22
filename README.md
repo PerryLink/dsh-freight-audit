@@ -306,7 +306,7 @@ node scripts/acceptance.mjs                               # 重跑公开/合成�
 node samples/quickstart/run.mjs --check                   # 合成样例，应输出 quickstart ok
 ```
 
-当前版本 `0.2.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs`（10 个测试文件、29 个用例；`pnpm test` 已内置构建步骤）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python/Pillow 出 1440×576 hero 双语深浅 webp，手写 SVG 出 1100×660 结构图深浅双版，五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
+当前版本 `0.2.2`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs`（10 个测试文件、29 个用例；`pnpm test` 已内置构建步骤）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python/Pillow 出 1440×576 hero 双语深浅 webp，手写 SVG 出 1100×660 结构图深浅双版，五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 

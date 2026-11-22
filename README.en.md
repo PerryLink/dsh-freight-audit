@@ -308,7 +308,7 @@ node scripts/acceptance.mjs                               # re-run the public/sy
 node samples/quickstart/run.mjs --check                   # synthetic sample, should print quickstart ok
 ```
 
-Current version `0.2.1` (matches `package.json`). Tests: `node --test test/*.test.mjs` (10 test files, 29 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow for the 1440×576 bilingual light/dark hero webp, hand-written SVG for the 1100×660 light/dark structure pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
+Current version `0.2.2` (matches `package.json`). Tests: `node --test test/*.test.mjs` (10 test files, 29 cases; `pnpm test` builds first). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow for the 1440×576 bilingual light/dark hero webp, hand-written SVG for the 1100×660 light/dark structure pair shared by all five languages) and are safe to re-run: `python scripts/gen-readme-assets.py`.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `freight`, `audit`, `logistics`, `perrylink`, `ratecard`
 
